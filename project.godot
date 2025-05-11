@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="Oracle test"
-run/main_scene="res://Scenes/huntingscreen.tscn"
+run/main_scene="res://Scenes/creaturescreen.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 GameManager="*res://Scripts/GameManager.gd"
+ProgressionManager="*res://Scripts/ProgressionManager.gd"
 InventoryManager="*res://Scripts/InventoryManager.gd"
 
 [display]

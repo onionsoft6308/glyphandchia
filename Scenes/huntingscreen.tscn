@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://r8mbvyy8y4fj"]
+[gd_scene load_steps=18 format=3 uid="uid://r8mbvyy8y4fj"]
 
 [ext_resource type="Texture2D" uid="uid://dendnodjkahky" path="res://Images/apocalpytic city street view 3.jpg" id="1_0jhed"]
+[ext_resource type="Script" path="res://Scripts/gathering_screen.gd" id="1_r7ffd"]
 [ext_resource type="Texture2D" uid="uid://b8owkxbxd638g" path="res://Images/Test sprites veges/VEGGIES/VEGGIES_LINE/Beetroot.png" id="2_3sc4n"]
 [ext_resource type="PackedScene" uid="uid://cfp5vlfpc03qh" path="res://Scenes/Item.tscn" id="3_lu82y"]
 [ext_resource type="PackedScene" uid="uid://cx0wskdfm3lgi" path="res://Scenes/UIlayer.tscn" id="3_wp37s"]
@@ -22,6 +23,7 @@ radius = 16.1245
 radius = 47.0106
 
 [node name="huntingscreen" type="Node2D"]
+script = ExtResource("1_r7ffd")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 1156.0
@@ -37,21 +39,6 @@ shape = SubResource("CircleShape2D_lorck")
 
 [node name="Sprite2D" type="Sprite2D" parent="BeetRoot"]
 texture = ExtResource("2_3sc4n")
-
-[node name="InventoryUI" type="Label" parent="."]
-visible = false
-offset_left = 871.0
-offset_top = 333.0
-offset_right = 1060.0
-offset_bottom = 462.0
-
-[node name="DialogueLabl" type="Label" parent="."]
-visible = false
-offset_left = 13.0
-offset_top = 336.0
-offset_right = 455.0
-offset_bottom = 395.0
-text = "\"\""
 
 [node name="UILayerRoot" parent="." instance=ExtResource("3_wp37s")]
 

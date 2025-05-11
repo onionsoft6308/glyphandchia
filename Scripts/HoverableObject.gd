@@ -21,12 +21,14 @@ func _on_mouse_exited():
 func _on_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed:
 		if can_be_collected:
-			# Add the object to the inventory if it can be collected
-			if not InventoryManager.is_item_collected(object_name):
-				InventoryManager.add_item(item_texture, object_name)
-				GameManager.update_inventory_ui()
-				InventoryManager.mark_item_collected(object_name)
-				queue_free()  # Remove the object from the scene
-				GameManager.hide_dialogue()  # Hide the dialogue text
+			if InventoryManager.can_add_to_inventory(object_name):
+				if not InventoryManager.is_item_collected(object_name):
+					InventoryManager.add_item(item_texture, object_name)
+					GameManager.update_inventory_ui()
+					InventoryManager.mark_item_collected(object_name)
+					queue_free()
+					GameManager.hide_dialogue()
+			else:
+				print(object_name, "is not part of Chia's desired items.")
 		else:
 			print(object_name, "is not collectible.")

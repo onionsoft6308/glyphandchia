@@ -1,37 +1,63 @@
 extends Node2D
 
 # References to UI elements
-onready var dialogue_box = $DialogueBox
-onready var inventory_ui = $InventoryUI
+var dialogue_box: Label  # Reference to the DialogueLabel node
+var inventory_ui: GridContainer  # Reference to the InventoryGrid node
 
 func _ready():
-	# Initialize the UI and set up interactive objects
-	dialogue_box.text = " "  # Ensure the dialogue box starts blank but visible
-	inventory_ui.text = "Inventory: "  # Ensure the inventory UI starts blank but visible
+	# Locate the UILayer instance in the scene
+	var ui_layer = get_node("UILayer")  # Adjust the path if necessary
+	if ui_layer:
+		dialogue_box = ui_layer.get_node("DialogueBox/DialogueLabel")  # Adjust the path if necessary
+		inventory_ui = ui_layer.get_node("InventoryPanel/InventoryGrid")  # Adjust the path if necessary
+	else:
+		print("Error: UILayer not found in the scene!")
+
+	# Initialize the UI
+	if dialogue_box:
+		dialogue_box.text = " "  # Ensure the dialogue box starts blank but visible
+	if inventory_ui:
+		print("Inventory UI found!")  # Debugging to confirm the inventory UI is found
+
+	# Set up signals for manually placed interactive objects
 	setup_interactive_objects()
 
 func setup_interactive_objects():
-	# Connect signals for all interactive objects
+	# Connect signals for all manually placed interactive objects
 	for child in get_children():
-		if child is Area2D:  # Ensure it's an interactable object
-			child.connect("mouse_entered", self, "_on_Object_hovered", [child])
-			child.connect("mouse_exited", self, "_on_Object_unhovered", [child])
-			child.connect("input_event", self, "_on_Object_clicked", [child])
+		if child is Area2D and child.has_method("get_item_name"):  # Ensure it's an interactable object
+			child.connect("mouse_entered", Callable(self, "_on_Object_hovered").bind(child))
+			child.connect("mouse_exited", Callable(self, "_on_Object_unhovered").bind(child))
+			child.connect("input_event", Callable(self, "_on_Object_clicked").bind(child))
 
 func _on_Object_hovered(object):
-	GameManager.apply_hover_effect(object)
-	dialogue_box.text = "This is a " + object.name  # Update dialogue box text
+	if dialogue_box:
+		GameManager.apply_hover_effect(object)
+		dialogue_box.text = "This is a " + object.get_item_name()  # Update dialogue box text
 
 func _on_Object_unhovered(object):
-	GameManager.remove_hover_effect(object)
-	dialogue_box.text = " "  # Keep the dialogue box visible but blank
+	if dialogue_box:
+		GameManager.remove_hover_effect(object)
+		dialogue_box.text = " "  # Keep the dialogue box visible but blank
 
 func _on_Object_clicked(viewport, event, shape_idx, object):
 	if event is InputEventMouseButton and event.pressed:
-		GameManager.add_to_inventory(object.name)
-		object.queue_free()  # Remove the object from the scene
-		update_inventory_ui()
+		var item_name = object.get_item_name()
+		if InventoryManager.can_add_to_inventory(item_name):
+			GameManager.add_to_inventory(item_name, object.texture)  # Pass both the name and texture
+			object.queue_free()  # Remove the object from the scene
+			update_inventory_ui()
+		else:
+			print("This item is not part of the current ingredient set.")
 
 func update_inventory_ui():
 	# Update the inventory UI with the current inventory
-	inventory_ui.text = "Inventory: " + ", ".join(GameManager.inventory)
+	if inventory_ui:
+		inventory_ui.clear_children()  # Clear the inventory grid
+		for texture in InventoryManager.inventory_items:
+			var item_icon = TextureRect.new()
+			item_icon.texture = texture
+			item_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			item_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			item_icon.set_custom_minimum_size(Vector2(48, 48))
+			inventory_ui.add_child(item_icon)

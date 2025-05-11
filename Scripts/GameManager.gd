@@ -4,15 +4,23 @@ extends Node
 var inventory_grid: GridContainer
 var dialogue_label: Label
 
-@export var typing_speed: float = 0.05  # Time delay between each character (adjustable in the editor)
+@export var typing_speed: float = 0.03  # Time delay between each character (adjustable in the editor)
 
 var typing_task_active: bool = false  # To track if a typing task is active
+
+var dragged_item: TextureRect = null  # The item being dragged
+var original_position: Vector2 = Vector2.ZERO  # Original position of the dragged item
+
+var chia_node: Node2D  # Reference to the Chia node
 
 func _ready():
 	# Ensure inventory_grid is assigned
 	if not inventory_grid:
 		print("Error: inventory_grid is not assigned!")
 		return
+
+	# Assign the Chia node
+	chia_node = get_node("creaturescreen/Chia")  # Replace with the actual path to the Chia node
 
 	# Refresh the inventory UI with persistent data
 	print("Calling update_inventory_ui() in _ready()")
@@ -43,7 +51,7 @@ func update_inventory_ui():
 			item_icon.texture = texture
 			item_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			item_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			item_icon.set_custom_minimum_size(Vector2(32, 32))
+			item_icon.set_custom_minimum_size(Vector2(48, 48))
 			inventory_grid.add_child(item_icon)
 			print("Item loaded into inventory grid:", item_icon)
 	else:
@@ -81,3 +89,32 @@ func hide_dialogue():
 		dialogue_label.text = ""  # Clear the dialogue text
 	else:
 		print("Error: Dialogue label is not set.")
+
+func _on_inventory_item_mouse_pressed(item: TextureRect):
+	dragged_item = item
+	original_position = item.rect_position
+	item.rect_pivot_offset = item.rect_size / 2  # Set pivot to center
+	item.rect_global_position = get_viewport().get_mouse_position() - item.rect_pivot_offset
+
+func _on_inventory_item_mouse_released():
+	if dragged_item:
+		var mouse_pos = get_viewport().get_mouse_position()
+		if is_mouse_over_chia(mouse_pos):
+			remove_from_inventory(dragged_item.texture)
+			dragged_item.queue_free()  # Remove the item from the UI
+			chia_node.receive_item(dragged_item.texture)  # Notify Chia of the received item
+		else:
+			dragged_item.rect_position = original_position  # Reset position
+		dragged_item = null
+
+func _process(delta):
+	if dragged_item:
+		dragged_item.rect_global_position = get_viewport().get_mouse_position() - dragged_item.rect_pivot_offset
+
+func is_mouse_over_chia(mouse_pos: Vector2) -> bool:
+	return chia_node.get_global_rect().has_point(mouse_pos)
+
+func use_glyph():
+	print("Glyph used!")
+	# Notify Chia to provide the next set of items
+	chia_node.update_thought_bubble()
