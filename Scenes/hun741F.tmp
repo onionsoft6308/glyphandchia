@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://r8mbvyy8y4fj"]
+
+[ext_resource type="Texture2D" uid="uid://dendnodjkahky" path="res://Images/apocalpytic city street view 3.jpg" id="1_0jhed"]
+[ext_resource type="Texture2D" uid="uid://b8owkxbxd638g" path="res://Images/Test sprites veges/VEGGIES/VEGGIES_LINE/Beetroot.png" id="2_3sc4n"]
+[ext_resource type="PackedScene" uid="uid://cfp5vlfpc03qh" path="res://Scenes/Item.tscn" id="3_lu82y"]
+[ext_resource type="PackedScene" uid="uid://cx0wskdfm3lgi" path="res://Scenes/UIlayer.tscn" id="3_wp37s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lorck"]
+radius = 16.1245
+
+[node name="Control" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -2.0
+offset_top = -3.0
+offset_right = 1323.0
+offset_bottom = 649.0
+texture = ExtResource("1_0jhed")
+
+[node name="BeetRoot" type="Area2D" parent="."]
+visible = false
+position = Vector2(552, 85)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BeetRoot"]
+shape = SubResource("CircleShape2D_lorck")
+
+[node name="Sprite2D" type="Sprite2D" parent="BeetRoot"]
+texture = ExtResource("2_3sc4n")
+
+[node name="InventoryUI" type="Label" parent="."]
+visible = false
+offset_left = 871.0
+offset_top = 333.0
+offset_right = 1060.0
+offset_bottom = 462.0
+
+[node name="DialogueLabl" type="Label" parent="."]
+visible = false
+offset_left = 13.0
+offset_top = 336.0
+offset_right = 455.0
+offset_bottom = 395.0
+text = "\"\""
+
+[node name="UILayerRoot" parent="." instance=ExtResource("3_wp37s")]
+
+[node name="Item" parent="." instance=ExtResource("3_lu82y")]
+
+[editable path="UILayerRoot"]
+[editable path="Item"]

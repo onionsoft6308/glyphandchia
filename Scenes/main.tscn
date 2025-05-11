@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bk25s2spbfpis"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="InventoryUI" type="Label" parent="."]
+layout_mode = 0
+offset_left = 704.0
+offset_top = 533.0
+offset_right = 1112.0
+offset_bottom = 618.0
+
+[node name="DialogueBox" type="Label" parent="."]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 530.0
+offset_right = 389.0
+offset_bottom = 614.0
+text = "\"\""

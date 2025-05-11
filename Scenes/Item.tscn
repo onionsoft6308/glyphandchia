@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://cfp5vlfpc03qh"]
+
+[ext_resource type="Texture2D" uid="uid://ctk5fqhfjsrso" path="res://Images/Test sprites veges/VEGGIES/VEGGIES_NL/Beetroot.png" id="1_ekiyj"]
+[ext_resource type="Texture2D" uid="uid://b8owkxbxd638g" path="res://Images/Test sprites veges/VEGGIES/VEGGIES_LINE/Beetroot.png" id="2_ix2ra"]
+[ext_resource type="Script" path="res://Scripts/Item.gd" id="2_pkq36"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xxvfu"]
+radius = 15.1327
+
+[node name="Item" type="Area2D"]
+script = ExtResource("2_pkq36")
+item_texture = ExtResource("2_ix2ra")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(50, 34)
+texture = ExtResource("1_ekiyj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(50, 34)
+shape = SubResource("CircleShape2D_xxvfu")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

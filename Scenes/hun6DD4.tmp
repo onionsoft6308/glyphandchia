@@ -1,0 +1,135 @@
+[gd_scene load_steps=17 format=3 uid="uid://r8mbvyy8y4fj"]
+
+[ext_resource type="Texture2D" uid="uid://dendnodjkahky" path="res://Images/apocalpytic city street view 3.jpg" id="1_0jhed"]
+[ext_resource type="Texture2D" uid="uid://b8owkxbxd638g" path="res://Images/Test sprites veges/VEGGIES/VEGGIES_LINE/Beetroot.png" id="2_3sc4n"]
+[ext_resource type="PackedScene" uid="uid://cfp5vlfpc03qh" path="res://Scenes/Item.tscn" id="3_lu82y"]
+[ext_resource type="PackedScene" uid="uid://cx0wskdfm3lgi" path="res://Scenes/UIlayer.tscn" id="3_wp37s"]
+[ext_resource type="Script" path="res://Scripts/HoverableObject.gd" id="4_dox5c"]
+[ext_resource type="Texture2D" uid="uid://q12o6v6wkqk1" path="res://Images/Test sprites veges/VEGGIES/VEGGIES_LINE/Broccoli.png" id="4_gyu70"]
+[ext_resource type="Texture2D" uid="uid://hkriloymtqg" path="res://Images/Chia/thought bubble test sprite.png" id="5_1y5n8"]
+[ext_resource type="Texture2D" uid="uid://vd4m1q5yk5sx" path="res://Images/Test sprites veges/VEGGIES/VEGGIES_LINE/Ginger.png" id="5_ol4cg"]
+[ext_resource type="Texture2D" uid="uid://b7tt8oncxqwtm" path="res://Images/Test sprites veges/VEGGIES/VEGGIES_LINE/Carrot.png" id="6_5t8r2"]
+[ext_resource type="Texture2D" uid="uid://cfwpcv06ijm4h" path="res://Images/Test sprites veges/VEGGIES/VEGGIES_NL/BellPepper.png" id="8_gns3o"]
+[ext_resource type="Texture2D" uid="uid://6m2cysrosqbj" path="res://Images/Test sprites veges/VEGGIES/VEGGIES_LINE/BellPepper.png" id="8_tvmsk"]
+[ext_resource type="Texture2D" uid="uid://dovdykycemra8" path="res://Images/Test sprites veges/VEGGIES/VEGGIES_LINE/Cauliflower.png" id="9_8jl0a"]
+[ext_resource type="Texture2D" uid="uid://cm1mjrmxtsjx0" path="res://Images/Test sprites veges/VEGGIES/VEGGIES_LINE/Corn.png" id="10_rwmqc"]
+[ext_resource type="Texture2D" uid="uid://jqjroalxui08" path="res://Images/Test sprites veges/VEGGIES/VEGGIES_NL/Corn.png" id="11_4j8kd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lorck"]
+radius = 16.1245
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vj8jo"]
+radius = 47.0106
+
+[node name="huntingscreen" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1156.0
+offset_bottom = 548.0
+texture = ExtResource("1_0jhed")
+
+[node name="BeetRoot" type="Area2D" parent="."]
+visible = false
+position = Vector2(552, 85)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BeetRoot"]
+shape = SubResource("CircleShape2D_lorck")
+
+[node name="Sprite2D" type="Sprite2D" parent="BeetRoot"]
+texture = ExtResource("2_3sc4n")
+
+[node name="InventoryUI" type="Label" parent="."]
+visible = false
+offset_left = 871.0
+offset_top = 333.0
+offset_right = 1060.0
+offset_bottom = 462.0
+
+[node name="DialogueLabl" type="Label" parent="."]
+visible = false
+offset_left = 13.0
+offset_top = 336.0
+offset_right = 455.0
+offset_bottom = 395.0
+text = "\"\""
+
+[node name="UILayerRoot" parent="." instance=ExtResource("3_wp37s")]
+
+[node name="NonCollectible" type="Area2D" parent="."]
+script = ExtResource("4_dox5c")
+object_name = "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
+can_be_collected = null
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NonCollectible"]
+position = Vector2(223, 195)
+shape = SubResource("CircleShape2D_vj8jo")
+
+[node name="Sprite2D" type="Sprite2D" parent="NonCollectible"]
+position = Vector2(223, 195)
+texture = ExtResource("5_1y5n8")
+
+[node name="Collectibles" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Item" parent="Collectibles" instance=ExtResource("3_lu82y")]
+position = Vector2(252, 15)
+item_name = "Beetroot"
+
+[node name="Item2" parent="Collectibles" instance=ExtResource("3_lu82y")]
+position = Vector2(365, 23)
+item_texture = ExtResource("4_gyu70")
+item_name = "Broccoli"
+
+[node name="Sprite2D" parent="Collectibles/Item2" index="0"]
+texture = ExtResource("4_gyu70")
+
+[node name="Item3" parent="Collectibles" instance=ExtResource("3_lu82y")]
+position = Vector2(485, 43)
+item_texture = ExtResource("5_ol4cg")
+item_name = "Hmm. i love ginger."
+
+[node name="Sprite2D" parent="Collectibles/Item3" index="0"]
+texture = ExtResource("5_ol4cg")
+
+[node name="Item4" parent="Collectibles" instance=ExtResource("3_lu82y")]
+position = Vector2(433, 127)
+item_texture = ExtResource("6_5t8r2")
+item_name = "Carrot are good for your eyes."
+
+[node name="Sprite2D" parent="Collectibles/Item4" index="0"]
+texture = ExtResource("6_5t8r2")
+
+[node name="Item5" parent="Collectibles" instance=ExtResource("3_lu82y")]
+position = Vector2(327, 145)
+item_texture = ExtResource("8_gns3o")
+item_name = "Bellpeppers!! Awesome"
+
+[node name="Sprite2D" parent="Collectibles/Item5" index="0"]
+texture = ExtResource("8_tvmsk")
+
+[node name="Item6" parent="Collectibles" instance=ExtResource("3_lu82y")]
+position = Vector2(507, 112)
+item_texture = ExtResource("9_8jl0a")
+item_name = "Cauliflower lorem ipsum"
+
+[node name="Sprite2D" parent="Collectibles/Item6" index="0"]
+texture = ExtResource("9_8jl0a")
+
+[node name="Item7" parent="Collectibles" instance=ExtResource("3_lu82y")]
+position = Vector2(354, 74)
+item_texture = ExtResource("11_4j8kd")
+item_name = "\"But soft, what light through yonder window breaks?\""
+
+[node name="Sprite2D" parent="Collectibles/Item7" index="0"]
+texture = ExtResource("10_rwmqc")
+
+[editable path="Collectibles/Item"]
+[editable path="Collectibles/Item2"]
+[editable path="Collectibles/Item3"]
+[editable path="Collectibles/Item4"]
+[editable path="Collectibles/Item5"]
+[editable path="Collectibles/Item6"]
+[editable path="Collectibles/Item7"]

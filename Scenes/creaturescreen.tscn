@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://ddt0c7l6tbc3t"]
+
+[ext_resource type="Texture2D" uid="uid://de2dpvadut0u0" path="res://Images/Tokyo-Genso-Ikebukuro.jpg" id="1_jiiho"]
+[ext_resource type="Texture2D" uid="uid://cam6ot3cjtkf7" path="res://Images/Chia/chia test sprite.png" id="2_3kxqu"]
+[ext_resource type="PackedScene" uid="uid://cx0wskdfm3lgi" path="res://Scenes/UIlayer.tscn" id="3_ml6jw"]
+
+[node name="creaturescreen" type="Node2D"]
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+offset_left = -1.0
+offset_top = 1.0
+offset_right = 1152.0
+offset_bottom = 545.0
+texture = ExtResource("1_jiiho")
+expand_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 377.0
+offset_top = 168.0
+offset_right = 729.0
+offset_bottom = 489.0
+texture = ExtResource("2_3kxqu")
+
+[node name="UILayerRoot" parent="." instance=ExtResource("3_ml6jw")]
+
+[editable path="UILayerRoot"]
