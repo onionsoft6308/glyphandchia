@@ -22,20 +22,20 @@ scale = Vector2(3.5098, 3.20588)
 texture = ExtResource("2_3kxqu")
 script = ExtResource("3_hdgvr")
 thought_bubble = NodePath("ThoughtBubble")
-thought_items_container = NodePath("ThoughtBubble/GridContainer")
+thought_items_container = NodePath("ThoughtBubble/ChiaGrid")
 
 [node name="ThoughtBubble" type="Sprite2D" parent="Chia"]
 position = Vector2(-43.0223, -32.4404)
 scale = Vector2(0.758133, 0.681867)
 texture = ExtResource("3_y5yrs")
 
-[node name="GridContainer" type="GridContainer" parent="Chia/ThoughtBubble"]
+[node name="ChiaGrid" type="GridContainer" parent="Chia/ThoughtBubble"]
 offset_left = -33.9306
 offset_top = -24.4326
 offset_right = 39.0694
 offset_bottom = -3.43256
 metadata/_edit_use_anchors_ = true
 
-[node name="UILayerRoot" parent="." instance=ExtResource("3_ml6jw")]
+[node name="UILayer" parent="." instance=ExtResource("3_ml6jw")]
 
-[editable path="UILayerRoot"]
+[editable path="UILayer"]

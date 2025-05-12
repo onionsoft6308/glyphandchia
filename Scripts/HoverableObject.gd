@@ -11,17 +11,17 @@ func _ready():
 	connect("input_event", Callable(self, "_on_input_event"))
 
 func _on_mouse_entered():
-	# Show the object's name in the dialogue box
+	print("Hovering over:", object_name)
 	GameManager.show_dialogue(object_name)
 
 func _on_mouse_exited():
-	# Hide the dialogue when the mouse exits
+	print("Mouse exited:", object_name)
 	GameManager.hide_dialogue()
 
 func _on_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed:
 		if can_be_collected:
-			if InventoryManager.can_add_to_inventory(object_name):
+			if InventoryManager.can_add_to_inventory(object_name):  # Validate against Chia's ingredients
 				if not InventoryManager.is_item_collected(object_name):
 					InventoryManager.add_item(item_texture, object_name)
 					GameManager.update_inventory_ui()

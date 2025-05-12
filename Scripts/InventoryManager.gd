@@ -35,7 +35,12 @@ func set_chia_desired_items(items: Array):
 	chia_desired_items = items
 
 func can_add_to_inventory(item_name: String) -> bool:
-	return item_name in ProgressionManager.get_current_ingredients()
+	# Extract the base name (e.g., "Beetroot") from the desired ingredients
+	for ingredient_path in ProgressionManager.get_current_ingredients():
+		var ingredient_name = ingredient_path.get_file().get_basename()  # Extract "Beetroot" from the path
+		if ingredient_name == item_name:
+			return true
+	return false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

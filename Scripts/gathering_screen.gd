@@ -43,12 +43,12 @@ func _on_Object_unhovered(object):
 func _on_Object_clicked(viewport, event, shape_idx, object):
 	if event is InputEventMouseButton and event.pressed:
 		var item_name = object.get_item_name()
-		if InventoryManager.can_add_to_inventory(item_name):
+		if InventoryManager.can_add_to_inventory(item_name):  # Validate against Chia's ingredients
 			GameManager.add_to_inventory(item_name, object.texture)  # Pass both the name and texture
 			object.queue_free()  # Remove the object from the scene
 			update_inventory_ui()
 		else:
-			print("This item is not part of the current ingredient set.")
+			print(item_name, "is not part of Chia's desired items.")
 
 func update_inventory_ui():
 	# Update the inventory UI with the current inventory

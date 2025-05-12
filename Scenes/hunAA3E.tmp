@@ -46,6 +46,7 @@ texture = ExtResource("2_3sc4n")
 [node name="NonCollectible" type="Area2D" parent="."]
 script = ExtResource("4_dox5c")
 object_name = "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
+can_be_collected = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NonCollectible"]
 position = Vector2(223, 195)
