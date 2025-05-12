@@ -26,8 +26,11 @@ func _on_input_event(_viewport, event, _shape_idx):
 					InventoryManager.add_item(item_texture, object_name, "Ingredient")  # Pass the item type as the third argument
 					GameManager.update_inventory_ui()
 					InventoryManager.mark_item_collected(object_name)
-					queue_free()
+					queue_free()  # Remove the item from the world
 					GameManager.hide_dialogue()
+					print(object_name, "added to inventory.")
+				else:
+					print(object_name, "is already collected.")
 			else:
 				print(object_name, "is not part of Chia's desired items.")
 		else:

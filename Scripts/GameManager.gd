@@ -59,12 +59,16 @@ func update_inventory_ui():
 
 		# Populate the grid with items from the persistent inventory
 		for item in InventoryManager.inventory_items:
-			var item_icon = TextureRect.new()
-			item_icon.texture = item["texture"]
-			item_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-			item_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			item_icon.set_custom_minimum_size(Vector2(64, 64))  # Ensure proper size
-			inventory_grid.add_child(item_icon)
+			# Load the Item.tscn scene
+			var item_scene = preload("res://Scenes/Item.tscn").instantiate()
+			
+			# Set the item's properties
+			item_scene.item_texture = item["texture"]
+			item_scene.item_name = item["name"]
+			item_scene.item_type = item["type"]
+			item_scene.is_in_inventory = true  # Mark as an inventory item
+			
+			inventory_grid.add_child(item_scene)
 			print("Added item to inventory grid:", item["name"])
 	else:
 		print("Error: Inventory grid is not set.")

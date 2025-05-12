@@ -22,12 +22,6 @@ func add_item(texture: Texture2D, item_name: String, item_type: String):
 	inventory_items.append({"texture": texture, "name": item_name, "type": item_type})
 	print("Item added to inventory:", item_name, "Texture resource path:", texture.resource_path)
 
-# Remove an item from the inventory
-func remove_item(texture: Texture2D):
-	if texture in inventory_items:
-		inventory_items.erase(texture)
-		print("Item removed from inventory:", texture)
-
 # Mark an item as collected
 func mark_item_collected(item_name: String):
 	collected_items[item_name] = true
@@ -36,9 +30,6 @@ func mark_item_collected(item_name: String):
 # Check if an item has been collected
 func is_item_collected(item_name: String) -> bool:
 	return collected_items.get(item_name, false)
-
-func set_chia_desired_items(items: Array):
-	chia_desired_items = items
 
 func can_add_to_inventory(item_name: String) -> bool:
 	# Extract the base name (e.g., "Beetroot") from the desired ingredients
