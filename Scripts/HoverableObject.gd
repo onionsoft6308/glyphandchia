@@ -23,7 +23,7 @@ func _on_input_event(_viewport, event, _shape_idx):
 		if can_be_collected:
 			if InventoryManager.can_add_to_inventory(object_name):  # Validate against Chia's ingredients
 				if not InventoryManager.is_item_collected(object_name):
-					InventoryManager.add_item(item_texture, object_name)
+					InventoryManager.add_item(item_texture, object_name, "Ingredient")  # Pass the item type as the third argument
 					GameManager.update_inventory_ui()
 					InventoryManager.mark_item_collected(object_name)
 					queue_free()

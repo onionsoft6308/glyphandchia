@@ -64,6 +64,13 @@ offset_bottom = 40.0
 [node name="Item" parent="Collectibles" instance=ExtResource("3_lu82y")]
 position = Vector2(252, 15)
 item_texture = ExtResource("8_wpjwe")
+item_name = "Beetroot"
+
+[node name="Sprite2D" parent="Collectibles/Item" index="0"]
+position = Vector2(0, 0)
+
+[node name="CollisionShape2D" parent="Collectibles/Item" index="1"]
+position = Vector2(0, 0)
 
 [node name="Item2" parent="Collectibles" instance=ExtResource("3_lu82y")]
 position = Vector2(365, 23)
@@ -72,7 +79,11 @@ item_name = "Broccoli"
 item_description = "br br br oc oc occ oli oli oli"
 
 [node name="Sprite2D" parent="Collectibles/Item2" index="0"]
+position = Vector2(0, 0)
 texture = ExtResource("4_gyu70")
+
+[node name="CollisionShape2D" parent="Collectibles/Item2" index="1"]
+position = Vector2(0, 0)
 
 [node name="Item3" parent="Collectibles" instance=ExtResource("3_lu82y")]
 position = Vector2(485, 43)
@@ -81,7 +92,11 @@ item_name = "Ginger"
 item_description = "A fresh piece of ginger"
 
 [node name="Sprite2D" parent="Collectibles/Item3" index="0"]
+position = Vector2(0, 0)
 texture = ExtResource("5_ol4cg")
+
+[node name="CollisionShape2D" parent="Collectibles/Item3" index="1"]
+position = Vector2(0, 0)
 
 [node name="Item4" parent="Collectibles" instance=ExtResource("3_lu82y")]
 position = Vector2(433, 127)
@@ -90,7 +105,11 @@ item_name = "Carrot "
 item_description = "Carrot are good for your eyes."
 
 [node name="Sprite2D" parent="Collectibles/Item4" index="0"]
+position = Vector2(0, 0)
 texture = ExtResource("6_5t8r2")
+
+[node name="CollisionShape2D" parent="Collectibles/Item4" index="1"]
+position = Vector2(0, 0)
 
 [node name="Item5" parent="Collectibles" instance=ExtResource("3_lu82y")]
 position = Vector2(327, 145)
@@ -99,7 +118,11 @@ item_name = "BellPepper"
 item_description = "a fresh Bellpepper"
 
 [node name="Sprite2D" parent="Collectibles/Item5" index="0"]
+position = Vector2(0, 0)
 texture = ExtResource("8_tvmsk")
+
+[node name="CollisionShape2D" parent="Collectibles/Item5" index="1"]
+position = Vector2(0, 0)
 
 [node name="Item6" parent="Collectibles" instance=ExtResource("3_lu82y")]
 position = Vector2(507, 112)
@@ -108,7 +131,11 @@ item_name = "Cauliflower"
 item_description = "Cauliflower lorem ipsum"
 
 [node name="Sprite2D" parent="Collectibles/Item6" index="0"]
+position = Vector2(0, 0)
 texture = ExtResource("9_8jl0a")
+
+[node name="CollisionShape2D" parent="Collectibles/Item6" index="1"]
+position = Vector2(0, 0)
 
 [node name="Item7" parent="Collectibles" instance=ExtResource("3_lu82y")]
 position = Vector2(354, 74)
@@ -117,7 +144,11 @@ item_name = "Corn"
 item_description = "\"But soft, what light through yonder window breaks?\""
 
 [node name="Sprite2D" parent="Collectibles/Item7" index="0"]
+position = Vector2(0, 0)
 texture = ExtResource("10_rwmqc")
+
+[node name="CollisionShape2D" parent="Collectibles/Item7" index="1"]
+position = Vector2(0, 0)
 
 [editable path="Collectibles/Item"]
 [editable path="Collectibles/Item2"]

@@ -44,7 +44,7 @@ func _on_Object_clicked(viewport, event, shape_idx, object):
 	if event is InputEventMouseButton and event.pressed:
 		var item_name = object.get_item_name()
 		if InventoryManager.can_add_to_inventory(item_name):  # Validate against Chia's ingredients
-			GameManager.add_to_inventory(item_name, object.texture)  # Pass both the name and texture
+			GameManager.add_to_inventory(object.texture, item_name, "Ingredient")  # Pass the item type as the third argument
 			object.queue_free()  # Remove the object from the scene
 			update_inventory_ui()
 		else:
@@ -53,11 +53,21 @@ func _on_Object_clicked(viewport, event, shape_idx, object):
 func update_inventory_ui():
 	# Update the inventory UI with the current inventory
 	if inventory_ui:
-		inventory_ui.clear_children()  # Clear the inventory grid
-		for texture in InventoryManager.inventory_items:
-			var item_icon = TextureRect.new()
-			item_icon.texture = texture
-			item_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-			item_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			item_icon.set_custom_minimum_size(Vector2(48, 48))
-			inventory_ui.add_child(item_icon)
+		# Get the current items already in the grid
+		var existing_items = []
+		for child in inventory_ui.get_children():
+			if child is TextureRect and child.texture:
+				existing_items.append(child.texture)
+
+		# Add only new items to the grid
+		for item in InventoryManager.inventory_items:
+			if item["texture"] not in existing_items:
+				var item_icon = TextureRect.new()
+				item_icon.texture = item["texture"]
+				item_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+				item_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+				item_icon.set_custom_minimum_size(Vector2(48, 48))  # Ensure proper size
+				inventory_ui.add_child(item_icon)
+				print("Added item to inventory UI:", item["name"], "Texture:", item["texture"].resource_path)
+	else:
+		print("Error: Inventory UI not found!")

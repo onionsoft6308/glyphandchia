@@ -8,7 +8,7 @@ var dialogue_label: Label
 
 var typing_task_active: bool = false  # To track if a typing task is active
 
-var dragged_item: TextureRect = null  # The item being dragged
+var dragged_item: Control = null  # The item currently being dragged
 var original_position: Vector2 = Vector2.ZERO  # Original position of the dragged item
 
 var chia_node: Node2D  # Reference to the Chia node
@@ -34,14 +34,19 @@ func _ready():
 	update_inventory_ui()
 
 # Add an item to the inventory
-func add_to_inventory(texture: Texture2D, item_name: String):
-	InventoryManager.add_item(texture, item_name)  # Add to the persistent inventory
+func add_to_inventory(texture: Texture2D, item_name: String, item_type: String):
+	InventoryManager.add_item(texture, item_name, item_type)  # Add to the persistent inventory
 	update_inventory_ui()
 
 # Remove an item from the inventory
 func remove_from_inventory(texture: Texture2D):
-	InventoryManager.remove_item(texture)  # Remove from the persistent inventory
-	update_inventory_ui()
+	for item in InventoryManager.inventory_items:
+		if item["texture"] == texture:
+			InventoryManager.inventory_items.erase(item)
+			print("Removed item from inventory:", item["name"])
+			update_inventory_ui()  # Refresh the inventory UI
+			return
+	print("Error: Item not found in inventory.")
 
 # Update the inventory UI
 func update_inventory_ui():
@@ -53,14 +58,14 @@ func update_inventory_ui():
 			child.queue_free()  # Free the child node to avoid memory leaks
 
 		# Populate the grid with items from the persistent inventory
-		for texture in InventoryManager.inventory_items:
+		for item in InventoryManager.inventory_items:
 			var item_icon = TextureRect.new()
-			item_icon.texture = texture
+			item_icon.texture = item["texture"]
 			item_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			item_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			item_icon.set_custom_minimum_size(Vector2(48, 48))
+			item_icon.set_custom_minimum_size(Vector2(64, 64))  # Ensure proper size
 			inventory_grid.add_child(item_icon)
-			print("Item loaded into inventory grid:", item_icon)
+			print("Added item to inventory grid:", item["name"])
 	else:
 		print("Error: Inventory grid is not set.")
 
@@ -99,24 +104,41 @@ func _on_inventory_item_mouse_pressed(item: TextureRect):
 	original_position = item.rect_position
 	item.rect_pivot_offset = item.rect_size / 2  # Set pivot to center
 	item.rect_global_position = get_viewport().get_mouse_position() - item.rect_pivot_offset
+	print("Started dragging:", item.name)
 
 func _on_inventory_item_mouse_released():
 	if dragged_item:
 		var mouse_pos = get_viewport().get_mouse_position()
+		
+		# Check if the item is over Chia
 		if is_mouse_over_chia(mouse_pos):
-			remove_from_inventory(dragged_item.texture)
-			dragged_item.queue_free()  # Remove the item from the UI
-			chia_node.receive_item(dragged_item.texture)  # Notify Chia of the received item
+			if dragged_item.name == "Ingredient":  # Only allow ingredients to be given to Chia
+				remove_from_inventory(dragged_item.texture)
+				dragged_item.queue_free()  # Remove the item from the UI
+				chia_node.receive_item(dragged_item.texture)  # Notify Chia of the received item
+			else:
+				print("This item cannot be given to Chia.")
+		
+		# Snap back to the original position if no valid receptacle is found
 		else:
-			dragged_item.rect_position = original_position  # Reset position
+			dragged_item.rect_position = original_position
+			print("Item returned to original position:", dragged_item.name)
+		
 		dragged_item = null
 
 func _process(delta):
 	if dragged_item:
-		dragged_item.rect_global_position = get_viewport().get_mouse_position() - dragged_item.rect_pivot_offset
+		dragged_item.position = get_viewport().get_mouse_position()
 
 func is_mouse_over_chia(mouse_pos: Vector2) -> bool:
 	return chia_node.get_global_rect().has_point(mouse_pos)
+
+func is_mouse_over_glyph_receptacle(mouse_pos: Vector2) -> bool:
+	# Replace with the actual logic to check if the mouse is over a glyph receptacle
+	var glyph_receptacle = get_node_or_null("GlyphReceptacle")  # Adjust the path as needed
+	if glyph_receptacle:
+		return glyph_receptacle.get_global_rect().has_point(mouse_pos)
+	return false
 
 func use_glyph():
 	print("Glyph used!")
@@ -153,3 +175,9 @@ func find_node_recursive(parent: Node, name: String) -> Node:
 		if found:
 			return found
 	return null
+
+func _on_inventory_item_gui_input(event: InputEvent, item: TextureRect):
+	if event is InputEventMouseButton and event.pressed:
+		_on_inventory_item_mouse_pressed(item)
+	elif event is InputEventMouseButton and not event.pressed:
+		_on_inventory_item_mouse_released()

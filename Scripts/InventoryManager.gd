@@ -8,13 +8,19 @@ var chia_desired_items: Array = []  # Items Chia wants for the current level
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	print("Inventory items:", inventory_items)
 
 # Add an item to the inventory
-func add_item(texture: Texture2D, item_name: String):
-	if texture not in inventory_items:
-		inventory_items.append(texture)
-		print("Item added to inventory:", texture)
+func add_item(texture: Texture2D, item_name: String, item_type: String):
+	# Check if the item already exists in the inventory
+	for existing_item in inventory_items:
+		if existing_item["name"] == item_name:
+			print("Item already exists in inventory:", item_name)
+			return  # Do not add duplicates
+
+	# Add the new item to the inventory
+	inventory_items.append({"texture": texture, "name": item_name, "type": item_type})
+	print("Item added to inventory:", item_name, "Texture resource path:", texture.resource_path)
 
 # Remove an item from the inventory
 func remove_item(texture: Texture2D):

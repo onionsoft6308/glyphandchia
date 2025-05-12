@@ -36,6 +36,7 @@ func receive_item(item_texture: Texture2D):
 		received_ingredients.append(item_texture.resource_path)
 		current_ingredients.erase(item_texture.resource_path)
 		print("Received ingredient:", item_texture.resource_path)
+		update_thought_bubble()  # Refresh the thought bubble
 		if current_ingredients.size() == 0:
 			give_glyph()
 	else:
@@ -46,7 +47,7 @@ func give_glyph():
 	var glyph_path = ProgressionManager.get_current_glyph()
 	var glyph_texture = load(glyph_path)
 	if glyph_texture:
-		InventoryManager.add_item(glyph_texture, "Glyph")
+		InventoryManager.add_item(glyph_texture, "Glyph", "Glyph")  # Pass the item type as the third argument
 		GameManager.update_inventory_ui()
 
 	# Advance to the next stage
