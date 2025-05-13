@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://b25j2rx8qag2n"]
+
+[ext_resource type="Script" path="res://Scripts/InventoryItem.gd" id="1_sfft5"]
+
+[node name="InventoryItem" type="Control"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_sfft5")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+stretch_mode = 5
+
+[connection signal="gui_input" from="TextureRect" to="." method="_on_inventory_item_image_gui_input"]

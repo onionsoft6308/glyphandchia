@@ -64,7 +64,6 @@ layout_mode = 3
 anchors_preset = 0
 
 [node name="Beet" parent="Collectibles" instance=ExtResource("3_lu82y")]
-z_index = 1
 custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
 anchors_preset = -1

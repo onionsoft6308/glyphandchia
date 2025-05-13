@@ -54,25 +54,17 @@ func update_inventory_ui():
 		print("Updating inventory UI...")
 		# Clear the inventory grid
 		for child in inventory_grid.get_children():
-			inventory_grid.remove_child(child)
 			child.queue_free()  # Free the child node to avoid memory leaks
 
 		# Populate the grid with items from the persistent inventory
 		for item in InventoryManager.inventory_items:
-			# Load the Item.tscn scene
-			var item_scene = preload("res://Scenes/Item.tscn").instantiate()
-			var item_node = item_scene.get_node("Item") # Use the actual name of your Area2D node
-			item_node.item_texture = item["texture"]
-			item_node.item_name = item["name"]
-			item_node.item_type = item["type"]
-			item_node.is_in_inventory = true
-
-			var wrapper = Control.new()
-			wrapper.custom_minimum_size = Vector2(64, 64)
-			wrapper.mouse_filter = Control.MOUSE_FILTER_IGNORE  # <-- Add this line!
-			wrapper.add_child(item_scene)
-			item_scene.position = wrapper.custom_minimum_size / 2
-			inventory_grid.add_child(wrapper)
+			# Load the InventoryItem.tscn scene
+			var inv_item = preload("res://Scenes/InventoryItem.tscn").instantiate()
+			inv_item.item_texture = item["texture"]
+			inv_item.item_name = item["name"]
+			inv_item.item_type = item["type"]
+			inventory_grid.add_child(inv_item)
+			print("Added item to inventory grid:", item["name"])
 	else:
 		print("Error: Inventory grid is not set.")
 

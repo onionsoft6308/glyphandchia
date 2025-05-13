@@ -57,5 +57,5 @@ func give_glyph():
 	update_thought_bubble()
 
 	# Update the huntingscreen with the new ingredients
-	var huntingscreen = get_node("huntingscreen")  # Adjust the path as needed
-	huntingscreen.update_ingredients(ProgressionManager.get_current_ingredients())
+	# var huntingscreen = get_node("huntingscreen")  # Adjust the path as needed
+	# huntingscreen.update_ingredients(ProgressionManager.get_current_ingredients())
