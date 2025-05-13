@@ -15,14 +15,17 @@ func _ready():
 	if $Sprite2D:
 		$Sprite2D.texture = item_texture
 		$Sprite2D.scale = Vector2(1, 1)  # Adjust the scale as needed
-		print("Sprite2D texture set for item:", item_name, "Texture resource path:", item_texture.resource_path)
+		
 	else:
 		print("Error: Sprite2D node not found!")
 
 	# Set the size of the CollisionShape2D to match the Sprite2D
 	if $CollisionShape2D and $CollisionShape2D.shape is RectangleShape2D:
-		var sprite_size = $Sprite2D.texture.get_size()
-		$CollisionShape2D.shape.extents = sprite_size / 2  # Set extents to half the size
+		if $Sprite2D.texture:
+			var sprite_size = $Sprite2D.texture.get_size()
+			$CollisionShape2D.shape.extents = sprite_size / 2  # Set extents to half the size
+		else:
+			print("Error: Sprite2D.texture is null for item:", item_name)
 
 	# Save the original position for snapping back (only for inventory items)
 	if is_in_inventory:
@@ -95,13 +98,13 @@ func collect_item():
 		print(item_name, "cannot be added to the inventory.")
 
 func is_over_chia() -> bool:
-	var chia = get_tree().get_root().get_node("Path/To/Chia")  # Replace with actual path
+	var chia = get_tree().get_root().get_node("creaturescreen/Chia")  # Replace with actual path
 	if chia and chia.get_global_rect().has_point(get_global_mouse_position()):
 		return true
 	return false
 
 func is_over_glyph_receptacle() -> bool:
-	var glyph_receptacle = get_tree().get_root().get_node("Path/To/GlyphReceptacle")  # Replace with actual path
+	var glyph_receptacle = get_tree().get_root().get_node("glyphscreen/GlyphReceptacle")  # Replace with actual path
 	if glyph_receptacle and glyph_receptacle.get_global_rect().has_point(get_global_mouse_position()):
 		return true
 	return false
