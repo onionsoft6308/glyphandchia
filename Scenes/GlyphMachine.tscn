@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://dsuh0aav0f8h7"]
+
+[ext_resource type="Texture2D" uid="uid://dvm5dek0yngvw" path="res://Images/Chia/memory machine.png" id="1_w7n3h"]
+[ext_resource type="PackedScene" uid="uid://cx0wskdfm3lgi" path="res://Scenes/UIlayer.tscn" id="2_wcm2r"]
+[ext_resource type="Script" path="res://Scripts/GlyphReceptacle.gd" id="3_daflv"]
+[ext_resource type="Texture2D" uid="uid://ccrji5m82xkur" path="res://Images/sr2e72fbd0562aws3.png" id="3_jnb23"]
+[ext_resource type="Script" path="res://Scripts/SceneChange.gd" id="4_37moe"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lli4q"]
+radius = 30.0167
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aub6b"]
+size = Vector2(94, 74)
+
+[node name="GlyphMachine" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 286.0
+offset_right = 893.0
+offset_bottom = 551.0
+texture = ExtResource("1_w7n3h")
+
+[node name="UILayer" parent="." instance=ExtResource("2_wcm2r")]
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("3_daflv")
+
+[node name="GlyphReceptacle" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(431, 415)
+shape = SubResource("CircleShape2D_lli4q")
+
+[node name="ArrowButtonToglyphscreen" type="Area2D" parent="."]
+script = ExtResource("4_37moe")
+scene_path = "res://Scenes/glyphscreen.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ArrowButtonToglyphscreen"]
+position = Vector2(52, 258)
+shape = SubResource("RectangleShape2D_aub6b")
+
+[node name="Sprite2D" type="Sprite2D" parent="ArrowButtonToglyphscreen"]
+position = Vector2(57, 262)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_jnb23")
+flip_h = true

@@ -79,5 +79,16 @@ func _is_over_chia(mouse_pos: Vector2) -> bool:
 	return false
 
 func _is_over_glyph_receptacle(mouse_pos: Vector2) -> bool:
-	var glyph_receptacle = get_tree().get_root().get_node("glyphscreen/GlyphReceptacle") # Adjust path
-	return glyph_receptacle and glyph_receptacle.get_global_rect().has_point(mouse_pos)
+	var glyph_receptacle = get_tree().get_root().get_node("GlyphMachine/Area2D/GlyphReceptacle") # Adjust path
+	if glyph_receptacle and is_instance_valid(glyph_receptacle):
+		var space_state = glyph_receptacle.get_world_2d().direct_space_state
+		var params = PhysicsPointQueryParameters2D.new()
+		params.position = mouse_pos
+		params.collide_with_areas = true
+		params.collide_with_bodies = false
+		params.exclude = []
+		var result = space_state.intersect_point(params)
+		for hit in result:
+			if hit.collider == glyph_receptacle:
+				return true
+	return false

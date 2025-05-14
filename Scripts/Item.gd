@@ -106,7 +106,7 @@ func is_over_chia() -> bool:
 	return false
 
 func is_over_glyph_receptacle() -> bool:
-	var glyph_receptacle = get_tree().get_root().get_node("glyphscreen/GlyphReceptacle")  # Replace with actual path
+	var glyph_receptacle = get_tree().get_root().get_node("GlyphMachine/Area2D/GlyphReceptacle")  # Replace with actual path
 	if glyph_receptacle and glyph_receptacle.get_global_rect().has_point(get_global_mouse_position()):
 		return true
 	return false

@@ -1,21 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://bebjg8adujxlj"]
+[gd_scene load_steps=8 format=3 uid="uid://bebjg8adujxlj"]
 
 [ext_resource type="Texture2D" uid="uid://cqamnvcuuhs4w" path="res://Images/the lab.jpg" id="1_876vk"]
 [ext_resource type="PackedScene" uid="uid://cx0wskdfm3lgi" path="res://Scenes/UIlayer.tscn" id="2_16gjg"]
 [ext_resource type="Script" path="res://Scripts/HoverableObject.gd" id="3_iy5ej"]
 [ext_resource type="Texture2D" uid="uid://hkriloymtqg" path="res://Images/Chia/thought bubble test sprite.png" id="4_mnf4f"]
+[ext_resource type="Script" path="res://Scripts/SceneChange.gd" id="5_iapwq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gbdxr"]
 radius = 47.0106
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fuacf"]
+size = Vector2(196.5, 194)
+
 [node name="glyphscreen" type="Node2D"]
 
-[node name="GlyphReceptacle" type="TextureRect" parent="."]
+[node name="GlyphRoomTexture" type="TextureRect" parent="."]
 offset_right = 1153.0
 offset_bottom = 551.0
 texture = ExtResource("1_876vk")
 
-[node name="UILayerRoot" parent="." instance=ExtResource("2_16gjg")]
+[node name="UILayer" parent="." instance=ExtResource("2_16gjg")]
 
 [node name="NonCollectible" type="Area2D" parent="."]
 script = ExtResource("3_iy5ej")
@@ -28,3 +32,11 @@ shape = SubResource("CircleShape2D_gbdxr")
 [node name="Sprite2D" type="Sprite2D" parent="NonCollectible"]
 position = Vector2(223, 195)
 texture = ExtResource("4_mnf4f")
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("5_iapwq")
+scene_path = "res://Scenes/GlyphMachine.tscn"
+
+[node name="MachineEnter" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(625.25, 233)
+shape = SubResource("RectangleShape2D_fuacf")

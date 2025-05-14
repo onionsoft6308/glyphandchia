@@ -134,7 +134,7 @@ func is_mouse_over_chia(mouse_pos: Vector2) -> bool:
 
 func is_mouse_over_glyph_receptacle(mouse_pos: Vector2) -> bool:
 	# Replace with the actual logic to check if the mouse is over a glyph receptacle
-	var glyph_receptacle = get_node_or_null("GlyphReceptacle")  # Adjust the path as needed
+	var glyph_receptacle = get_node_or_null("Area2D/GlyphReceptacle")  # Adjust the path as needed
 	if glyph_receptacle:
 		return glyph_receptacle.get_global_rect().has_point(mouse_pos)
 	return false
