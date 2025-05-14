@@ -83,6 +83,9 @@ item_texture = ExtResource("8_wpjwe")
 item_name = "Beetroot"
 item_description = "I loooooove beets!"
 
+[node name="CollisionShape2D" parent="Collectibles/Beet/Item" index="0"]
+position = Vector2(1, 2)
+
 [node name="Beet" parent="Collectibles/Beet" instance=ExtResource("3_lu82y")]
 custom_minimum_size = Vector2(0, 0)
 layout_mode = 1

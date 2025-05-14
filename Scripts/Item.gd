@@ -62,6 +62,7 @@ func _on_input_event(viewport, event, shape_idx):
 						InventoryManager.add_item(item_texture, item_name, item_type)
 						GameManager.update_inventory_ui()
 						InventoryManager.mark_item_collected(item_name)
+						GameManager.hide_dialogue()
 						queue_free()  # Remove the item from the world
 						print(item_name, "added to inventory.")
 					else:
@@ -93,6 +94,7 @@ func collect_item():
 		print("Adding item to inventory:", item_name)
 		InventoryManager.add_item(item_texture, item_name, item_type)
 		GameManager.update_inventory_ui()
+		GameManager.hide_dialogue()
 		queue_free()  # Remove the item from the world
 	else:
 		print(item_name, "cannot be added to the inventory.")

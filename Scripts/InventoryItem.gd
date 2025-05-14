@@ -5,40 +5,63 @@ extends Control
 @export var item_type: String
 
 var is_dragging := false
-var drag_offset := Vector2.ZERO
-var original_position := Vector2.ZERO
+var drag_preview: Control = null
 
 func _ready():
 	$TextureRect.texture = item_texture
 	$TextureRect.connect("gui_input", Callable(self, "_gui_input"))
-	original_position = global_position
+
+func _find_ui_layer(node := get_tree().current_scene):
+	if node is CanvasLayer and node.name == "UILayer":
+		return node
+	for child in node.get_children():
+		var found = _find_ui_layer(child)
+		if found:
+			return found
+	return null
 
 func _gui_input(event):
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		if event.pressed:
-			is_dragging = true
-			drag_offset = get_global_mouse_position() - global_position
-			print("Start dragging:", item_name)
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		is_dragging = true
+		# Remove any existing drag preview
+		if drag_preview:
+			drag_preview.queue_free()
+		# Create drag preview
+		drag_preview = preload("res://Scenes/DragPreview.tscn").instantiate()
+		drag_preview.set_texture(item_texture)
+		var ui_layer = _find_ui_layer()
+		if ui_layer:
+			ui_layer.add_child(drag_preview)
+			drag_preview.global_position = get_global_mouse_position()
 		else:
+			print("UILayer not found in this scene!")
+		$TextureRect.visible = false  # Hide real item for feedback
+
+func _unhandled_input(event):
+	if is_dragging:
+		if event is InputEventMouseMotion:
+			if drag_preview:
+				drag_preview.global_position = get_global_mouse_position()
+		elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
+			# Mouse released: end drag
 			is_dragging = false
-			print("Stop dragging:", item_name)
-			# Check drop targets
+			$TextureRect.visible = true
+			if drag_preview:
+				drag_preview.queue_free()
+				drag_preview = null
 			var mouse_pos = get_global_mouse_position()
+			# Only remove from inventory if dropped on a valid target
 			if _is_over_chia(mouse_pos) and item_type == "Ingredient":
-				GameManager.chia_node.receive_item(item_texture)
+				if GameManager.chia_node and is_instance_valid(GameManager.chia_node):
+					GameManager.chia_node.receive_item(item_texture)
+				else:
+					print("Error: Chia node is not set or invalid!")
 				GameManager.remove_from_inventory(item_texture)
 				queue_free()
 			elif _is_over_glyph_receptacle(mouse_pos) and item_type == "Glyph":
 				GameManager.remove_from_inventory(item_texture)
 				queue_free()
 				# Add your glyph logic here
-			else:
-				# Snap back to original position
-				global_position = original_position
-
-func _process(delta):
-	if is_dragging:
-		global_position = get_global_mouse_position() - drag_offset
 
 func _is_over_chia(mouse_pos: Vector2) -> bool:
 	var chia = GameManager.chia_node

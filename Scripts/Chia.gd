@@ -47,15 +47,10 @@ func give_glyph():
 	var glyph_path = ProgressionManager.get_current_glyph()
 	var glyph_texture = load(glyph_path)
 	if glyph_texture:
-		InventoryManager.add_item(glyph_texture, "Glyph", "Glyph")  # Pass the item type as the third argument
-		GameManager.update_inventory_ui()
-
-	# Advance to the next stage
+		var glyph_drop = preload("res://Scenes/GlyphDrop.tscn").instantiate()
+		glyph_drop.glyph_texture = glyph_texture
+		glyph_drop.global_position = Vector2(400, 300)  # Set to your desired screen position
+		get_tree().get_root().add_child(glyph_drop)
+		# Optionally trigger dialogue/cutscene here
 	ProgressionManager.advance_to_next_stage()
-
-	# Update Chia's thought bubble with the next set of ingredients
 	update_thought_bubble()
-
-	# Update the huntingscreen with the new ingredients
-	# var huntingscreen = get_node("huntingscreen")  # Adjust the path as needed
-	# huntingscreen.update_ingredients(ProgressionManager.get_current_ingredients())
