@@ -11,12 +11,17 @@ func _ready():
 	print("Inventory items:", inventory_items)
 
 # Add an item to the inventory
-func add_item(texture: Texture2D, item_name: String, item_type: String):
+func add_item(texture: Texture2D, item_name: String, item_type: String, force_add: bool = false):
 	# Check if the item already exists in the inventory
 	for existing_item in inventory_items:
 		if existing_item["name"] == item_name:
 			print("Item already exists in inventory:", item_name)
 			return  # Do not add duplicates
+
+	# Only check Chia's list if not force_add
+	if not force_add and not can_add_to_inventory(item_name):
+		print(item_name, "cannot be added to the inventory (not in Chia's list).")
+		return
 
 	# Add the new item to the inventory
 	inventory_items.append({"texture": texture, "name": item_name, "type": item_type})

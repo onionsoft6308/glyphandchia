@@ -23,10 +23,8 @@ func _find_ui_layer(node := get_tree().current_scene):
 func _gui_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		is_dragging = true
-		# Remove any existing drag preview
 		if drag_preview:
 			drag_preview.queue_free()
-		# Create drag preview
 		drag_preview = preload("res://Scenes/DragPreview.tscn").instantiate()
 		drag_preview.set_texture(item_texture)
 		var ui_layer = _find_ui_layer()
@@ -35,7 +33,7 @@ func _gui_input(event):
 			drag_preview.global_position = get_global_mouse_position()
 		else:
 			print("UILayer not found in this scene!")
-		$TextureRect.visible = false  # Hide real item for feedback
+		$TextureRect.visible = false
 
 func _unhandled_input(event):
 	if is_dragging:
@@ -43,14 +41,12 @@ func _unhandled_input(event):
 			if drag_preview:
 				drag_preview.global_position = get_global_mouse_position()
 		elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
-			# Mouse released: end drag
 			is_dragging = false
 			$TextureRect.visible = true
 			if drag_preview:
 				drag_preview.queue_free()
 				drag_preview = null
 			var mouse_pos = get_global_mouse_position()
-			# Only remove from inventory if dropped on a valid target
 			if _is_over_chia(mouse_pos) and item_type == "Ingredient":
 				if GameManager.chia_node and is_instance_valid(GameManager.chia_node):
 					GameManager.chia_node.receive_item(item_texture)
@@ -61,7 +57,6 @@ func _unhandled_input(event):
 			elif _is_over_glyph_receptacle(mouse_pos) and item_type == "Glyph":
 				GameManager.remove_from_inventory(item_texture)
 				queue_free()
-				# Add your glyph logic here
 
 func _is_over_chia(mouse_pos: Vector2) -> bool:
 	var chia = GameManager.chia_node
@@ -79,7 +74,7 @@ func _is_over_chia(mouse_pos: Vector2) -> bool:
 	return false
 
 func _is_over_glyph_receptacle(mouse_pos: Vector2) -> bool:
-	var glyph_receptacle = get_tree().get_root().get_node("GlyphMachine/Area2D/GlyphReceptacle") # Adjust path
+	var glyph_receptacle = get_tree().get_root().get_node("Area2D/GlyphReceptacle")
 	if glyph_receptacle and is_instance_valid(glyph_receptacle):
 		var space_state = glyph_receptacle.get_world_2d().direct_space_state
 		var params = PhysicsPointQueryParameters2D.new()

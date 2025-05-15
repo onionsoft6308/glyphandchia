@@ -158,7 +158,6 @@ position = Vector2(646, 290)
 item_texture = ExtResource("16_rafn8")
 item_name = "Eggplant"
 item_description = "Eggplant Advance"
-can_collect = false
 
 [node name="Area2D" parent="." instance=ExtResource("15_0t7jp")]
 position = Vector2(535, 285)

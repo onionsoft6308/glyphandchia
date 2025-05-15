@@ -41,7 +41,7 @@ scale = Vector2(1.5, 1.5)
 texture = ExtResource("5_c66pq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InspectIcon"]
-position = Vector2(0, 188.475)
+position = Vector2(0, -31.525)
 shape = SubResource("CircleShape2D_d4l56")
 
 [node name="CollectIcon" type="Area2D" parent="."]

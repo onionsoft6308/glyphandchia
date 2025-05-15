@@ -3,6 +3,7 @@ extends Area2D
 @export var item_texture: Texture2D
 @export var item_name: String
 @export var item_description: String
+@export var item_type: String = "Ingredient" # or "Glyph" as needed per instance
 @export var can_inspect: bool = true
 @export var can_collect: bool = false
 
@@ -14,6 +15,7 @@ func _ready():
 	$GlintSprite.visible = false
 	$InspectIcon.visible = false
 	$CollectIcon.visible = false
+	interaction_mode = false
 
 func _on_mouse_entered():
 	is_hovered = true
@@ -37,7 +39,6 @@ func _input_event(viewport, event, shape_idx):
 
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		if can_inspect and can_collect and not interaction_mode:
-			# Show inspect and collect icons, hide glint
 			$GlintSprite.visible = false
 			$InspectIcon.visible = true
 			$CollectIcon.visible = true
@@ -48,23 +49,35 @@ func _input_event(viewport, event, shape_idx):
 			_collect_item()
 
 func _unhandled_input(event):
+	if not is_inside_tree():
+		return
 	if interaction_mode and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		# If not clicking on the icons themselves, hide icons
+		var mouse_pos = get_global_mouse_position()
+		var over_inspect_icon = false
+		var over_collect_icon = false
+
+		# Check InspectIcon (circular)
+		if is_instance_valid($InspectIcon) and $InspectIcon.visible and $InspectIcon.has_node("CollisionShape2D"):
+			var shape = $InspectIcon.get_node("CollisionShape2D").shape
+			if shape is CircleShape2D:
+				var icon_pos = $InspectIcon.global_position
+				var radius = shape.radius
+				over_inspect_icon = mouse_pos.distance_to(icon_pos) <= radius
+
+		# Check CollectIcon (circular)
+		if is_instance_valid($CollectIcon) and $CollectIcon.visible and $CollectIcon.has_node("CollisionShape2D"):
+			var shape = $CollectIcon.get_node("CollisionShape2D").shape
+			if shape is CircleShape2D:
+				var icon_pos = $CollectIcon.global_position
+				var radius = shape.radius
+				over_collect_icon = mouse_pos.distance_to(icon_pos) <= radius
+
+		if over_inspect_icon or over_collect_icon:
+			return
 		_reset_icons()
-		var mouse_pos = to_local(get_global_mouse_position())
-		var clicked_inspect = $InspectIcon.visible and $InspectIcon.get_rect().has_point(mouse_pos)
-		var clicked_collect = $CollectIcon.visible and $CollectIcon.get_rect().has_point(mouse_pos)
-		if clicked_inspect and can_inspect:
-			_show_inspect()
-			_reset_icons()
-		elif clicked_collect and can_collect:
-			_collect_item()
-			_reset_icons()
-		else:
-			# Clicked elsewhere: hide icons
-			_reset_icons()
 
 func _reset_icons():
+	await get_tree().create_timer(0.3).timeout
 	$InspectIcon.visible = false
 	$CollectIcon.visible = false
 	interaction_mode = false
@@ -83,9 +96,11 @@ func _show_inspect():
 	GameManager.show_dialogue(item_description)
 
 func _collect_item():
+	print("Collect button pressed for:", item_name)
 	if can_collect:
-		InventoryManager.add_item(item_texture, item_name, "AdvancedItem")
+		InventoryManager.add_item(item_texture, item_name, item_type, true)
 		GameManager.update_inventory_ui()
+		await get_tree().create_timer(0.3).timeout
 		queue_free()
 
 func _find_ui_layer(node := get_tree().current_scene):
@@ -97,10 +112,12 @@ func _find_ui_layer(node := get_tree().current_scene):
 			return found
 	return null
 
-
 func _on_collect_icon_input_event(viewport, event, shape_idx):
-	pass # Replace with function body.
-
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		_collect_item()
+		# Do NOT call _reset_icons() here!
 
 func _on_inspect_icon_input_event(viewport, event, shape_idx):
-	pass # Replace with function body.
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		_show_inspect()
+		# Do NOT call _reset_icons() here!
