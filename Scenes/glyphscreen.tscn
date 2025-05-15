@@ -16,7 +16,7 @@ size = Vector2(196.5, 194)
 
 [node name="GlyphRoomTexture" type="TextureRect" parent="."]
 offset_right = 1153.0
-offset_bottom = 551.0
+offset_bottom = 500.0
 texture = ExtResource("1_876vk")
 
 [node name="UILayer" parent="." instance=ExtResource("2_16gjg")]

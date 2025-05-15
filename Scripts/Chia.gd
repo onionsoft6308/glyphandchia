@@ -26,7 +26,7 @@ func update_thought_bubble():
 			item_sprite.texture = ingredient_texture
 			item_sprite.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			item_sprite.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			item_sprite.set_custom_minimum_size(Vector2(48, 48))
+			item_sprite.set_custom_minimum_size(Vector2(32, 32))
 			thought_items_container.add_child(item_sprite)
 		else:
 			print("Failed to load ingredient texture:", ingredient_path)

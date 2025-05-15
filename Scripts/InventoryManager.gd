@@ -39,6 +39,16 @@ func can_add_to_inventory(item_name: String) -> bool:
 			return true
 	return false
 
+func update_inventory_ui():
+	# Clear grid, then:
+	for item in inventory_items:
+		var inv_item = preload("res://Scenes/InventoryItem.tscn").instantiate()
+		inv_item.item_texture = item.texture
+		inv_item.item_name = item.name
+		inv_item.item_type = item.type
+		# Add to your inventory grid/container
+		GameManager.inventory_grid.add_child(inv_item)
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
