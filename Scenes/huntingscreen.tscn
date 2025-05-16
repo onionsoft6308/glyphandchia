@@ -28,7 +28,7 @@ radius = 47.0106
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 1156.0
-offset_bottom = 498.0
+offset_bottom = 557.0
 texture = ExtResource("1_0jhed")
 
 [node name="BeetRoot" type="Area2D" parent="."]
@@ -156,8 +156,6 @@ position = Vector2(646, 290)
 item_texture = ExtResource("16_rafn8")
 item_name = "Eggplant"
 item_description = "Eggplant Advance"
-item_type = null
-can_inspect = null
 dialogue_json_path = "res://Scripts/Item1.json"
 
 [node name="Area2D" parent="." instance=ExtResource("15_0t7jp")]
@@ -165,10 +163,9 @@ position = Vector2(535, 285)
 item_texture = ExtResource("8_wpjwe")
 item_name = "Beetroot"
 item_description = "Beetroot Advanced"
-item_type = null
-can_inspect = null
 dialogue_json_path = "res://Scripts/Item1.json"
 
+[editable path="UILayer"]
 [editable path="Collectibles/Beet"]
 [editable path="Collectibles/Beet/Beet"]
 [editable path="Collectibles/Carrot"]

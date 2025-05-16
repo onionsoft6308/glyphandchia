@@ -20,6 +20,7 @@ func _process(delta):
 		pass
 
 func show_dialogue(dialogue, click_position: Vector2):
+		print("DEBUG: DialoguePanel show_dialogue called")
 		if dialogue.is_empty():
 				push_error("Dialogue data is empty!")
 				return
@@ -30,7 +31,7 @@ func show_dialogue(dialogue, click_position: Vector2):
 		visible = true
 		exit_button.visible = false
 		options_container.visible = false
-		get_tree().paused = true # Block game input
+		#get_tree().paused = true # Block game input
 
 func _set_panel_side(click_position):
 		var screen_center = get_viewport_rect().size.x / 2
@@ -42,26 +43,28 @@ func _set_panel_side(click_position):
 				get_tree().create_tween().tween_property(self, "position:x", get_viewport_rect().size.x - size.x, 0.3)
 
 func _show_section():
-		var section = dialogue_data[current_index]
-		full_text = section.get("text", "")
-		text_label.text = ""
-		is_typing = true
-		exit_button.visible = false
-		options_container.visible = false
-		_typewriter_effect()
-		if section.has("options"):
-				_show_options(section["options"])
+	var section = dialogue_data[current_index]
+	full_text = section.get("text", "")
+	print("DEBUG: full_text =", full_text)
+	text_label.text = ""
+	is_typing = true
+	exit_button.visible = false
+	options_container.visible = false
+	await _typewriter_effect()
+	if section.has("options"):
+		_show_options(section["options"])
 
 func _typewriter_effect():
-		var i = 0
-		while i <= full_text.length() and is_typing:
-				text_label.text = full_text.substr(0, i)
-				await get_tree().create_timer(typewriter_speed).timeout
-				i += 1
-		text_label.text = full_text
-		is_typing = false
-		if not dialogue_data[current_index].has("options"):
-				exit_button.visible = true
+	var i = 0
+	print("DEBUG: Starting typewriter for:", full_text)
+	while i <= full_text.length() and is_typing:
+		text_label.text = full_text.substr(0, i)
+		await get_tree().create_timer(typewriter_speed).timeout
+		i += 1
+	text_label.text = full_text
+	is_typing = false
+	if not dialogue_data[current_index].has("options"):
+		exit_button.visible = true
 
 func _show_options(options):
 		options_container.visible = true
@@ -78,7 +81,7 @@ func _on_option_selected(next_index):
 
 func _on_ExitButton_pressed():
 		visible = false
-		get_tree().paused = false # Unblock game input
+		#get_tree().paused = false # Unblock game input
 
 func _input(event):
 		if is_typing and event is InputEventMouseButton and event.pressed:

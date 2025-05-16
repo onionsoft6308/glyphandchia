@@ -93,3 +93,7 @@ func _on_non_collectible_mouse_shape_entered(shape_idx):
 
 func _on_non_collectible_mouse_shape_exited(shape_idx):
 	pass # Replace with function body.
+
+
+func _on_exit_button_pressed():
+	pass # Replace with function body.
