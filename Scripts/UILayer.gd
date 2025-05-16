@@ -2,16 +2,10 @@
 extends CanvasLayer
 
 func _ready():
-	# Assign the DialogueBox and InventoryGrid to GameManager
-	GameManager.dialogue_label = $DialogueBox/DialogueLabel
+	# Assign the InventoryGrid to GameManager
+	
 	GameManager.inventory_grid = $InventoryPanel/InventoryGrid
 
-	# Debugging to ensure the nodes are assigned correctly
-	if GameManager.dialogue_label and GameManager.inventory_grid:
-		print("GameManager nodes assigned successfully.")
-		print("InventoryGrid:", GameManager.inventory_grid)
-	else:
-		print("Error: Failed to assign nodes to GameManager.")
 
 	# Refresh the inventory UI
 	GameManager.update_inventory_ui()

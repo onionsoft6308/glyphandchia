@@ -20,10 +20,19 @@ config/icon="res://icon.svg"
 GameManager="*res://Scripts/GameManager.gd"
 ProgressionManager="*res://Scripts/ProgressionManager.gd"
 InventoryManager="*res://Scripts/InventoryManager.gd"
+DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+
+[dialogue_manager]
+
+general/balloon_path="res://Dialogic/balloon.tscn"
 
 [display]
 
 window/stretch/mode="viewport"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
 
 [rendering]
 

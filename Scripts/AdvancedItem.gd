@@ -6,6 +6,7 @@ extends Area2D
 @export var item_type: String = "Ingredient" # or "Glyph" as needed per instance
 @export var can_inspect: bool = true
 @export var can_collect: bool = false
+@export var dialogue_json_path: String = ""
 
 var is_hovered := false
 var interaction_mode := false
@@ -93,7 +94,22 @@ func _clear_description():
 		ui_layer.get_node("DescriptionBox/DescriptionLabel").text = ""
 
 func _show_inspect():
-	GameManager.show_dialogue(item_description)
+	if dialogue_json_path == "":
+		push_error("No dialogue_json_path set for this item!")
+		return
+	var file = FileAccess.open(dialogue_json_path, FileAccess.READ)
+	var dialogue = []
+	if file:
+		var json_result = JSON.parse_string(file.get_as_text())
+		if typeof(json_result) == TYPE_ARRAY:
+			dialogue = json_result
+		else:
+			push_error("Dialogue JSON is not an array!")
+	else:
+		push_error("Could not open dialogue file: " + dialogue_json_path)
+
+	var ui_layer = _find_ui_layer()
+	ui_layer.get_node("DialoguePanel").show_dialogue(dialogue, global_position)
 
 func _collect_item():
 	print("Collect button pressed for:", item_name)
@@ -121,3 +137,12 @@ func _on_inspect_icon_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		_show_inspect()
 		# Do NOT call _reset_icons() here!
+
+func _set_panel_side(click_position):
+	var screen_center = get_viewport_rect().size.x / 2
+	if click_position.x > screen_center:
+		position.x = -size.x
+		get_tree().create_tween().tween_property(self, "position:x", 0, 0.3)
+	else:
+		position.x = get_viewport_rect().size.x
+		get_tree().create_tween().tween_property(self, "position:x", get_viewport_rect().size.x - size.x, 0.3)
