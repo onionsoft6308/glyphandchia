@@ -2,7 +2,7 @@ extends Control
 
 @onready var text_label = $VBoxContainer/RichTextLabel
 @onready var options_container = $VBoxContainer/OptionsContainer
-@onready var exit_button = $VBoxContainer/ExitButton
+@onready var exit_button = $HBoxContainer/ExitButton
 
 
 var dialogue_data = []
@@ -10,10 +10,12 @@ var current_index = 0
 var is_typing = false
 var full_text = ""
 var typewriter_speed = 0.02
+var can_auto_exit := false
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-		pass # Replace with function body.
+	print("DEBUG: exit_button is ", exit_button)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -45,7 +47,6 @@ func _set_panel_side(click_position):
 func _show_section():
 	var section = dialogue_data[current_index]
 	full_text = section.get("text", "")
-	print("DEBUG: full_text =", full_text)
 	text_label.text = ""
 	is_typing = true
 	exit_button.visible = false
@@ -80,18 +81,27 @@ func _on_option_selected(next_index):
 		_show_section()
 
 func _on_ExitButton_pressed():
-		visible = false
-		#get_tree().paused = false # Unblock game input
+	print("DEBUG: Exit button pressed")
+	is_typing = false
+	visible = false
 
 func _input(event):
-		if is_typing and event is InputEventMouseButton and event.pressed:
-				is_typing = false
-				text_label.text = full_text
-		elif not is_typing and event is InputEventMouseButton and event.pressed:
-				if current_index < dialogue_data.size():
-						if not dialogue_data[current_index].has("options"):
-								if current_index < dialogue_data.size() - 1:
-										current_index += 1
-										_show_section()
-								else:
-										exit_button.visible = true
+	if event is InputEventMouseButton and event.pressed:
+		# If the mouse is over the exit button, let the button handle it
+		if exit_button.get_rect().has_point(exit_button.get_local_mouse_position()):
+			return
+
+		if is_typing:
+			is_typing = false
+			text_label.text = full_text
+		elif not is_typing:
+			if current_index < dialogue_data.size():
+				if not dialogue_data[current_index].has("options"):
+					if current_index < dialogue_data.size() - 1:
+						current_index += 1
+						await _show_section()
+					else:
+						exit_button.visible = true
+
+
+

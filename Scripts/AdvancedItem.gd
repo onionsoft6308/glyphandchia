@@ -100,9 +100,7 @@ func _show_inspect():
 	var dialogue = []
 	if file:
 		var file_text = file.get_as_text()
-		print("DEBUG: JSON file contents:\n", file_text)
 		var json_result = JSON.parse_string(file_text)
-		print("DEBUG: JSON parse result =", json_result)
 		if typeof(json_result) == TYPE_ARRAY:
 			dialogue = json_result
 			print("DEBUG: Parsed dialogue array:", dialogue)
