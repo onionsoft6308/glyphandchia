@@ -54,6 +54,7 @@ position = Vector2(223, 195)
 texture = ExtResource("5_1y5n8")
 
 [node name="Collectibles" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 
@@ -163,6 +164,21 @@ position = Vector2(535, 285)
 item_texture = ExtResource("8_wpjwe")
 item_name = "Beetroot"
 item_description = "Beetroot Advanced"
+dialogue_json_path = "res://Scripts/Item1.json"
+
+[node name="AdvancedItem2" parent="." instance=ExtResource("15_0t7jp")]
+position = Vector2(447, 175)
+item_texture = ExtResource("12_14j2p")
+item_name = "BellPepper"
+item_description = "Bellpepper mode"
+dialogue_json_path = "res://Scripts/Item1.json"
+
+[node name="AdvancedItem" parent="." instance=ExtResource("15_0t7jp")]
+position = Vector2(426, 308)
+item_texture = ExtResource("12_pqwr0")
+item_name = "Celery"
+item_description = "Celery"
+can_collect = false
 dialogue_json_path = "res://Scripts/Item1.json"
 
 [editable path="Collectibles/Beet"]

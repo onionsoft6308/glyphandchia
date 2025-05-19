@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 GameManager="*res://Scripts/GameManager.gd"
 ProgressionManager="*res://Scripts/ProgressionManager.gd"
+ItemInteractionManager="*res://Scripts/ItemInteractionManager.gd"
 InventoryManager="*res://Scripts/InventoryManager.gd"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 

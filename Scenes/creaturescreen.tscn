@@ -1,14 +1,27 @@
-[gd_scene load_steps=7 format=3 uid="uid://ddt0c7l6tbc3t"]
+[gd_scene load_steps=14 format=3 uid="uid://ddt0c7l6tbc3t"]
 
 [ext_resource type="Texture2D" uid="uid://de2dpvadut0u0" path="res://Images/Tokyo-Genso-Ikebukuro.jpg" id="1_jiiho"]
 [ext_resource type="Texture2D" uid="uid://cam6ot3cjtkf7" path="res://Images/Chia/chia test sprite.png" id="2_3kxqu"]
 [ext_resource type="Script" path="res://Scripts/Chia.gd" id="3_hdgvr"]
 [ext_resource type="PackedScene" uid="uid://cx0wskdfm3lgi" path="res://Scenes/UIlayer.tscn" id="3_ml6jw"]
 [ext_resource type="Texture2D" uid="uid://hkriloymtqg" path="res://Images/Chia/thought bubble test sprite.png" id="3_y5yrs"]
+[ext_resource type="Script" path="res://Scripts/ChiaInteractable.gd" id="6_bgah4"]
+[ext_resource type="Texture2D" uid="uid://djnivexvj3aci" path="res://Images/inspecticon.png" id="7_xdh87"]
+[ext_resource type="Texture2D" uid="uid://b7vl6pmbub6aj" path="res://Images/glint.png" id="8_vhdqa"]
+[ext_resource type="Texture2D" uid="uid://krck5fipsfys" path="res://Images/speechicon.png" id="9_hi3o7"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v1swh"]
 radius = 23.933
-height = 80.4771
+height = 51.156
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n6frj"]
+radius = 31.5753
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vdtnu"]
+radius = 32.0156
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ufn7a"]
+size = Vector2(197, 265)
 
 [node name="creaturescreen" type="Node2D"]
 
@@ -16,7 +29,7 @@ height = 80.4771
 
 [node name="TextureRect2" type="TextureRect" parent="."]
 offset_left = -1.0
-offset_top = 38.0
+offset_top = 2.0
 offset_right = 1152.0
 offset_bottom = 558.0
 texture = ExtResource("1_jiiho")
@@ -28,7 +41,7 @@ thought_bubble = NodePath("ChiaSprite/ThoughtBubble")
 thought_items_container = NodePath("ChiaSprite/ThoughtBubble/ChiaGrid")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Chia"]
-position = Vector2(580, 335)
+position = Vector2(580, 298)
 scale = Vector2(3.5098, 3.20588)
 shape = SubResource("CapsuleShape2D_v1swh")
 
@@ -46,10 +59,56 @@ texture = ExtResource("3_y5yrs")
 anchors_preset = -1
 anchor_left = 0.137
 anchor_top = 0.176
-anchor_right = 1.539
+anchor_right = 0.882137
 anchor_bottom = 0.539
 offset_left = -50.974
 offset_top = -50.952
 offset_right = -50.978
 offset_bottom = -50.978
 metadata/_edit_use_anchors_ = true
+
+[node name="ChiaInteractable" type="Area2D" parent="Chia"]
+script = ExtResource("6_bgah4")
+inspect_json_path = "res://Scripts/ChiaInspect1.json"
+conversation_json_path = "res://Scripts/ChiaConversation1.json"
+
+[node name="InspectIcon" type="Area2D" parent="Chia/ChiaInteractable"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chia/ChiaInteractable/InspectIcon"]
+position = Vector2(586, 185)
+shape = SubResource("CircleShape2D_n6frj")
+
+[node name="InspectIconSprite" type="Sprite2D" parent="Chia/ChiaInteractable/InspectIcon"]
+position = Vector2(586, 181)
+scale = Vector2(0.357143, 0.357143)
+texture = ExtResource("7_xdh87")
+
+[node name="GlintSprite" type="Sprite2D" parent="Chia/ChiaInteractable"]
+visible = false
+position = Vector2(578, 330)
+scale = Vector2(0.214286, 0.214286)
+texture = ExtResource("8_vhdqa")
+
+[node name="ConversationIcon" type="Area2D" parent="Chia/ChiaInteractable"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chia/ChiaInteractable/ConversationIcon"]
+position = Vector2(705, 272)
+shape = SubResource("CircleShape2D_vdtnu")
+
+[node name="ConversationIconSprite" type="Sprite2D" parent="Chia/ChiaInteractable/ConversationIcon"]
+position = Vector2(707, 272)
+scale = Vector2(1.55952, 1.55952)
+texture = ExtResource("9_hi3o7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chia/ChiaInteractable"]
+position = Vector2(580.5, 333.5)
+shape = SubResource("RectangleShape2D_ufn7a")
+
+[connection signal="mouse_entered" from="Chia" to="Chia" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Chia" to="Chia" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="Chia/ChiaInteractable" to="Chia/ChiaInteractable" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Chia/ChiaInteractable" to="Chia/ChiaInteractable" method="_on_mouse_exited"]
+[connection signal="input_event" from="Chia/ChiaInteractable/InspectIcon" to="Chia/ChiaInteractable" method="_on_inspect_icon_input_event"]
+[connection signal="input_event" from="Chia/ChiaInteractable/ConversationIcon" to="Chia/ChiaInteractable" method="_on_conversation_icon_input_event"]

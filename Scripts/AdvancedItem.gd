@@ -11,20 +11,30 @@ extends Area2D
 var is_hovered := false
 var interaction_mode := false
 
+
+
 func _ready():
 	$ItemSprite.texture = item_texture
 	$GlintSprite.visible = false
 	$InspectIcon.visible = false
 	$CollectIcon.visible = false
 	interaction_mode = false
+	ItemInteractionManager.set_active_item(self)
 
 func _on_mouse_entered():
 	is_hovered = true
 	_show_description()
+	if interaction_mode:
+		return
 	if can_inspect and can_collect:
 		$GlintSprite.visible = true
-	elif can_inspect:
+		$InspectIcon.visible = false
+	elif can_inspect and not can_collect:
+		$GlintSprite.visible = false
 		$InspectIcon.visible = true
+	elif can_collect and not can_inspect:
+		$GlintSprite.visible = false
+		$InspectIcon.visible = false
 
 func _on_mouse_exited():
 	is_hovered = false
@@ -40,11 +50,15 @@ func _input_event(viewport, event, shape_idx):
 
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		if can_inspect and can_collect and not interaction_mode:
+			ItemInteractionManager.set_active_item(self)
 			$GlintSprite.visible = false
 			$InspectIcon.visible = true
 			$CollectIcon.visible = true
 			interaction_mode = true
 		elif can_inspect and not can_collect:
+			# Play inspect dialogue immediately on item click
+			ItemInteractionManager.set_active_item(self)
+			_hide_icons_immediately()
 			_show_inspect()
 		elif can_collect and not can_inspect:
 			_collect_item()
@@ -141,6 +155,16 @@ func _on_collect_icon_input_event(viewport, event, shape_idx):
 
 func _on_inspect_icon_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		ItemInteractionManager.set_active_item(self)
+		_hide_icons_immediately()
 		_show_inspect()
-		# Do NOT call _reset_icons() here!
+
+func _hide_icons_immediately():
+	$GlintSprite.visible = false
+	$InspectIcon.visible = false
+	$CollectIcon.visible = false
+	interaction_mode = false
+
+func _exit_tree():
+	ItemInteractionManager.clear_active_item(self)
 

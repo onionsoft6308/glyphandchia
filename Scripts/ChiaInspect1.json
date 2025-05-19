@@ -1,0 +1,14 @@
+[
+    { "text": "what a strange creature.." },
+    { "text": "What is it doing here?",
+      "options": [
+        { "label": "Inspect Belly", "next": 2 }
+      ]
+    },
+    { "text": "His belly is funny looking." },
+    { "text": "Here is some more information.Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+      "options": [
+        { "label": "Leave", "next": -1 }
+      ]
+    }
+]

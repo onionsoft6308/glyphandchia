@@ -49,11 +49,17 @@ func _unhandled_input(event):
 			var mouse_pos = get_global_mouse_position()
 			if _is_over_chia(mouse_pos) and item_type == "Ingredient":
 				if GameManager.chia_node and is_instance_valid(GameManager.chia_node):
-					GameManager.chia_node.receive_item(item_texture)
+					# Only remove from inventory if Chia wants this ingredient
+					var chia_ingredients = ProgressionManager.get_current_ingredients()
+					var item_path = item_texture.resource_path
+					if chia_ingredients.has(item_path):
+						GameManager.chia_node.receive_item(item_texture)
+						GameManager.remove_from_inventory(item_texture)
+						queue_free()
+					else:
+						print("Chia does not want this ingredient right now!")
 				else:
 					print("Error: Chia node is not set or invalid!")
-				GameManager.remove_from_inventory(item_texture)
-				queue_free()
 			elif _is_over_glyph_receptacle(mouse_pos) and item_type == "Glyph":
 				GameManager.remove_from_inventory(item_texture)
 				queue_free()

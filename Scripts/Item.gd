@@ -60,7 +60,14 @@ func _on_input_event(viewport, event, shape_idx):
 		if event.button_index == MOUSE_BUTTON_LEFT and is_in_inventory:
 			is_dragging = false
 			if is_over_chia():
-				handle_drop_on_chia()
+				# Only drop if Chia wants this ingredient
+				var chia_ingredients = ProgressionManager.get_current_ingredients()
+				var item_path = item_texture.resource_path
+				if chia_ingredients.has(item_path):
+					handle_drop_on_chia()
+				else:
+					print("Chia does not want this ingredient right now!")
+					position = original_position
 			elif is_over_glyph_receptacle():
 				handle_drop_on_glyph_receptacle()
 			else:

@@ -3,9 +3,14 @@ extends CanvasLayer
 
 func _ready():
 	# Assign the InventoryGrid to GameManager
-	
 	GameManager.inventory_grid = $InventoryPanel/InventoryGrid
 
+	# Find Chia anywhere in the scene tree and connect
+	var chia = get_tree().get_root().find_child("Chia", true, false)
+	if chia:
+		chia.connect("hovered", Callable(self, "show_description"))
+	else:
+		print("Chia not found in scene tree!")
 
 	# Refresh the inventory UI
 	GameManager.update_inventory_ui()
@@ -96,4 +101,14 @@ func _on_non_collectible_mouse_shape_exited(shape_idx):
 
 
 func _on_exit_button_pressed():
+	pass # Replace with function body.
+
+
+
+
+func _on_inspect_icon_input_event(viewport, event, shape_idx):
+	pass # Replace with function body.
+
+
+func _on_conversation_icon_input_event(viewport, event, shape_idx):
 	pass # Replace with function body.

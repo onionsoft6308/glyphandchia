@@ -2,9 +2,12 @@ extends Node2D
 
 @export var thought_bubble: Sprite2D  # Reference to the thought bubble sprite
 @export var thought_items_container: GridContainer  # Container for item sprites
+@export var item_description: String = "Chia"
 
 var current_ingredients: Array = []  # Ingredients for the current stage
 var received_ingredients: Array = []  # Ingredients received from the player
+
+signal hovered(description)
 
 func _ready():
 	update_thought_bubble()
@@ -54,3 +57,21 @@ func give_glyph():
 		# Optionally trigger dialogue/cutscene here
 	ProgressionManager.advance_to_next_stage()
 	update_thought_bubble()
+
+func _on_mouse_entered():
+	emit_signal("hovered", item_description)
+	_show_description()
+
+func _on_mouse_exited():
+		emit_signal("hovered", "") # Clear description when not hovered
+		_clear_description()
+
+func _show_description():
+	var ui_layer = get_tree().get_root().find_child("UILayer", true, false)
+	if ui_layer and ui_layer.has_node("DescriptionBox/DescriptionLabel"):
+		ui_layer.get_node("DescriptionBox/DescriptionLabel").text = item_description
+
+func _clear_description():
+	var ui_layer = get_tree().get_root().find_child("UILayer", true, false)
+	if ui_layer and ui_layer.has_node("DescriptionBox/DescriptionLabel"):
+		ui_layer.get_node("DescriptionBox/DescriptionLabel").text = ""
