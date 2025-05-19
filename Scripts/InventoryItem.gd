@@ -10,6 +10,7 @@ var drag_preview: Control = null
 func _ready():
 	$TextureRect.texture = item_texture
 	$TextureRect.connect("gui_input", Callable(self, "_gui_input"))
+	
 
 func _find_ui_layer(node := get_tree().current_scene):
 	if node is CanvasLayer and node.name == "UILayer":

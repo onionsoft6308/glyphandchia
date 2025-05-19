@@ -7,7 +7,6 @@ func _ready():
 func _input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed:
 		# Add to inventory as a Control-based item
-		InventoryManager.add_item(glyph_texture, "Glyph", "Glyph")
+		InventoryManager.add_item(glyph_texture, "Glyph", "Glyph", true) # <-- force_add = true
 		GameManager.update_inventory_ui()
 		queue_free()
-		# Optionally trigger dialogue/cutscene here
