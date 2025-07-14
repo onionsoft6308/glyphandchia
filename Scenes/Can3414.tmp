@@ -1,0 +1,59 @@
+[gd_scene load_steps=10 format=3 uid="uid://cxvn4ryuwuefa"]
+
+[ext_resource type="Script" path="res://Scripts/Canoe.gd" id="1_tsf7l"]
+[ext_resource type="PackedScene" uid="uid://cx0wskdfm3lgi" path="res://Scenes/UIlayer.tscn" id="2_1vd0h"]
+[ext_resource type="Texture2D" uid="uid://c8ix871vwwqqu" path="res://Images/canoe.png" id="2_n43aj"]
+[ext_resource type="Texture2D" uid="uid://bn7dlj57dn3v4" path="res://Images/landmass test white.png" id="3_fe2x4"]
+[ext_resource type="Shader" path="res://Scripts/WaterRipple.gdshader" id="4_x2bea"]
+[ext_resource type="Texture2D" uid="uid://ci656prhydnxh" path="res://Images/water map.png" id="5_knt0u"]
+[ext_resource type="Script" path="res://Scenes/Water.gd" id="6_gxs42"]
+[ext_resource type="Texture2D" uid="uid://bj5jpe4uxj5t1" path="res://Images/landmass test.png" id="6_m65py"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u16pd"]
+shader = ExtResource("4_x2bea")
+shader_parameter/time = 0.3
+shader_parameter/ripple_center = Vector2(0, 0)
+shader_parameter/ripple_strength = 0.2
+shader_parameter/ripple_speed = 0.1
+shader_parameter/ripple_frequency = 20.0
+shader_parameter/ripple_thickness = 0.08
+shader_parameter/mask_texture = ExtResource("3_fe2x4")
+
+[node name="CanoeScene" type="Node2D"]
+
+[node name="UILayer" parent="." instance=ExtResource("2_1vd0h")]
+
+[node name="Water" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_u16pd")
+position = Vector2(546, 328)
+scale = Vector2(4.05782, 4.04706)
+texture = ExtResource("5_knt0u")
+script = ExtResource("6_gxs42")
+canoe_path = NodePath("../Canoe")
+
+[node name="Landmass Parent" type="StaticBody2D" parent="."]
+position = Vector2(-16.5005, -64)
+
+[node name="Landmass" type="Sprite2D" parent="Landmass Parent"]
+position = Vector2(574, 367)
+scale = Vector2(4.05782, 4.04706)
+texture = ExtResource("6_m65py")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Landmass Parent"]
+polygon = PackedVector2Array(99, 100, 107, 125, 133, 147, 163, 175, 163, 175, 205, 194, 265, 204, 265, 204, 282, 230, 278, 300, 252, 323, 303, 355, 309, 393, 309, 393, 309, 432, 331, 461, 371, 487, 367, 521, 331, 521, 299, 513, 265, 519, 244, 511, 197, 536, 195, 485, 148, 457, 33, 510, 42, 596, 78, 640, 233, 657, 301, 595, 307, 568, 492, 578, 484, 629, 537, 617, 537, 589, 573, 578, 599, 578, 728, 613, 830, 708, -22, 708, -20, 53, 35, 83)
+
+[node name="Canoe" type="Node2D" parent="."]
+position = Vector2(628, 446)
+scale = Vector2(0.33, 0.33)
+script = ExtResource("1_tsf7l")
+acceleration = 70.0
+max_speed = 100.0
+deceleration = 120.0
+turn_speed = 1.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Canoe"]
+texture = ExtResource("2_n43aj")
+
+[node name="Line2D" type="Line2D" parent="Canoe"]
+points = PackedVector2Array(67.1733, 65.0394)
+width = 2.0

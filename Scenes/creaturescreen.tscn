@@ -28,10 +28,10 @@ size = Vector2(197, 265)
 [node name="UILayer" parent="." instance=ExtResource("3_ml6jw")]
 
 [node name="TextureRect2" type="TextureRect" parent="."]
-offset_left = -1.0
-offset_top = 2.0
-offset_right = 1152.0
-offset_bottom = 558.0
+offset_left = -192.0
+offset_top = -15.0
+offset_right = 1220.0
+offset_bottom = 666.0
 texture = ExtResource("1_jiiho")
 expand_mode = 1
 
