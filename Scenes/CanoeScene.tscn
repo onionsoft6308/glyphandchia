@@ -3,26 +3,41 @@
 [ext_resource type="Script" path="res://Scripts/Canoe.gd" id="1_tsf7l"]
 [ext_resource type="PackedScene" uid="uid://cx0wskdfm3lgi" path="res://Scenes/UIlayer.tscn" id="2_1vd0h"]
 [ext_resource type="Texture2D" uid="uid://c8ix871vwwqqu" path="res://Images/canoe.png" id="2_n43aj"]
-[ext_resource type="Texture2D" uid="uid://bn7dlj57dn3v4" path="res://Images/landmass test white.png" id="3_fe2x4"]
+[ext_resource type="Texture2D" uid="uid://u78dwhej137e" path="res://Images/landmass_mask.png" id="3_66kmq"]
 [ext_resource type="Shader" path="res://Scripts/WaterRipple.gdshader" id="4_x2bea"]
 [ext_resource type="Texture2D" uid="uid://ci656prhydnxh" path="res://Images/water map.png" id="5_knt0u"]
 [ext_resource type="Script" path="res://Scenes/Water.gd" id="6_gxs42"]
 [ext_resource type="Texture2D" uid="uid://bj5jpe4uxj5t1" path="res://Images/landmass test.png" id="6_m65py"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_u16pd"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0sfxp"]
 shader = ExtResource("4_x2bea")
-shader_parameter/time = 0.1
-shader_parameter/ripple_center = Vector2(0, 0)
-shader_parameter/ripple_strength = 0.5
+shader_parameter/ripple_strength = 0.25
 shader_parameter/ripple_speed = 0.1
-shader_parameter/mask_texture = ExtResource("3_fe2x4")
+shader_parameter/ripple_center0 = null
+shader_parameter/ripple_time0 = null
+shader_parameter/ripple_center1 = null
+shader_parameter/ripple_time1 = null
+shader_parameter/ripple_center2 = null
+shader_parameter/ripple_time2 = null
+shader_parameter/ripple_center3 = null
+shader_parameter/ripple_time3 = null
+shader_parameter/ripple_center4 = null
+shader_parameter/ripple_time4 = null
+shader_parameter/ripple_center5 = null
+shader_parameter/ripple_time5 = null
+shader_parameter/ripple_center6 = null
+shader_parameter/ripple_time6 = null
+shader_parameter/ripple_center7 = null
+shader_parameter/ripple_time7 = null
+shader_parameter/mask_texture = ExtResource("3_66kmq")
 
 [node name="CanoeScene" type="Node2D"]
 
 [node name="UILayer" parent="." instance=ExtResource("2_1vd0h")]
+visible = false
 
 [node name="Water" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_u16pd")
+material = SubResource("ShaderMaterial_0sfxp")
 position = Vector2(546, 328)
 scale = Vector2(4.05782, 4.04706)
 texture = ExtResource("5_knt0u")

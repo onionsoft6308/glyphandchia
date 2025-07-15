@@ -1,21 +1,40 @@
 extends Sprite2D
 
 @export var canoe_path: NodePath
+@export var ripple_lifetime: float = 0.5
+@export var ripple_interval: float = 0.3 # seconds between ripples
+
+var ripples := []
+var last_ripple_time := 0.0
 
 func _process(_delta):
     var canoe = get_node_or_null(canoe_path)
+    var t = Time.get_ticks_msec() / 1000.0
     if canoe:
         var tex_size = texture.get_size()
         var half_size = (tex_size * scale) * 0.5
-        # Get canoe position relative to water's top-left corner in world space
         var top_left = global_position - half_size
         var offset = canoe.global_position - top_left
         var uv = Vector2(
             offset.x / (tex_size.x * scale.x),
             offset.y / (tex_size.y * scale.y)
         )
-        material.set_shader_parameter("ripple_center", uv)
-        material.set_shader_parameter("time", Time.get_ticks_msec() / 1000.0)
-        print("Canoe global:", canoe.global_position, " Water top_left:", top_left, " Offset:", offset, " UV:", uv)
+        # Spawn a ripple only at intervals while moving
+        if canoe.velocity.length() > 1.0:
+            if t - last_ripple_time > ripple_interval:
+                ripples.append({ "center": uv, "start_time": t })
+                last_ripple_time = t
+        # Remove old ripples
+        ripples = ripples.filter(func(r): return t - r.start_time < ripple_lifetime)
+        # Pass up to 8 ripples to the shader
+        for i in range(8):
+            if i < ripples.size():
+                material.set_shader_parameter("ripple_center" + str(i), ripples[i].center)
+                material.set_shader_parameter("ripple_time" + str(i), t - ripples[i].start_time)
+            else:
+                material.set_shader_parameter("ripple_center" + str(i), Vector2(-10, -10))
+                material.set_shader_parameter("ripple_time" + str(i), 0.0)
     else:
-        material.set_shader_parameter("ripple_center", Vector2(-10, -10))
+        for i in range(8):
+            material.set_shader_parameter("ripple_center" + str(i), Vector2(-10, -10))
+            material.set_shader_parameter("ripple_time" + str(i), 0.0)
