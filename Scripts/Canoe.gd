@@ -8,6 +8,7 @@ extends Node2D
 var velocity := Vector2.ZERO
 var moving := false
 var target_pos := Vector2.ZERO
+var is_blocked := false
 
 @onready var line = $Line2D
 
@@ -17,7 +18,29 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if is_blocked:
+		line.clear_points()  # Clear the line immediately when blocked
+		return
+
+	var ui_layer = get_tree().get_root().get_node_or_null("UILayer")
+	if ui_layer:
+		var overlay = ui_layer.get_node_or_null("DialogueOverlay")
+		if overlay and overlay.visible:
+			return
+
+	# --- Block canoe input if mouse is over a POI ClickArea ---
 	var mouse_pos = get_global_mouse_position()
+	var space_state = get_world_2d().direct_space_state
+	var params = PhysicsPointQueryParameters2D.new()
+	params.position = mouse_pos
+	params.collide_with_areas = true
+	params.collide_with_bodies = false
+	var result = space_state.intersect_point(params, 32)
+	for item in result:
+		if item.collider and item.collider.is_in_group("poi_click_area"):
+			return
+
+	# --- Canoe movement code below ---
 	line.clear_points()
 	line.add_point(Vector2.ZERO)
 	line.add_point(to_local(mouse_pos))
@@ -32,12 +55,9 @@ func _process(delta):
 	var distance = to_target.length()
 	var target_angle = to_target.angle()
 
-	# Smoothly rotate towards the target angle
 	rotation = lerp_angle(rotation, target_angle, turn_speed * delta)
-
-	# Only accelerate if facing (roughly) the target direction
 	var facing_dot = Vector2.RIGHT.rotated(rotation).dot(to_target.normalized())
-	var facing_threshold = 0.95 # 1.0 = perfect, lower = more forgiving
+	var facing_threshold = 0.95
 
 	if moving and distance > 2.0 and facing_dot > facing_threshold:
 		var desired_velocity = Vector2.RIGHT.rotated(rotation) * max_speed
@@ -48,5 +68,8 @@ func _process(delta):
 		velocity = velocity.move_toward(Vector2.ZERO, deceleration * delta)
 		if velocity.length() < 1.0:
 			velocity = Vector2.ZERO
+
+	if is_blocked:
+		return
 
 	global_position += velocity * delta

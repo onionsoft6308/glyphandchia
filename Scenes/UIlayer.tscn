@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://cx0wskdfm3lgi"]
+[gd_scene load_steps=11 format=3 uid="uid://cx0wskdfm3lgi"]
 
 [ext_resource type="Script" path="res://Scripts/UILayer.gd" id="1_cj8wg"]
 [ext_resource type="Texture2D" uid="uid://1heeyertpfof" path="res://Images/Chia/player mug test sprite.png" id="2_0qre0"]
 [ext_resource type="Script" path="res://Scripts/DialoguePanel.gd" id="2_6clke"]
 [ext_resource type="Texture2D" uid="uid://ccrji5m82xkur" path="res://Images/sr2e72fbd0562aws3.png" id="2_lab18"]
+[ext_resource type="Texture2D" uid="uid://dvdohjnj7nhv" path="res://Images/fireplace.png" id="5_n38vb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5o7xh"]
 bg_color = Color(0, 0, 0, 1)
@@ -12,7 +13,43 @@ border_width_left = 2
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dyy86"]
 bg_color = Color(0, 0, 0, 1)
 
-[node name="UILayer" type="CanvasLayer"]
+[sub_resource type="Animation" id="Animation_7luaj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_424j8"]
+resource_name = "fade_in_overlay"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6yfmp"]
+_data = {
+"RESET": SubResource("Animation_7luaj"),
+"fade_in_overlay": SubResource("Animation_424j8")
+}
+
+[node name="UILayer" type="CanvasLayer" groups=["ui"]]
 script = ExtResource("1_cj8wg")
 
 [node name="InputBlocker" type="Control" parent="."]
@@ -198,6 +235,19 @@ grow_vertical = 0
 horizontal_alignment = 1
 autowrap_mode = 2
 metadata/_edit_use_anchors_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../DialogueOverlay")
+libraries = {
+"": SubResource("AnimationLibrary_6yfmp")
+}
+
+[node name="DialogueOverlay" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_right = 1152.0
+offset_bottom = 643.0
+texture = ExtResource("5_n38vb")
+expand_mode = 3
 
 [connection signal="pressed" from="DialoguePanel/HBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="DialoguePanel/HBoxContainer/ExitButton" to="DialoguePanel" method="_on_ExitButton_pressed"]

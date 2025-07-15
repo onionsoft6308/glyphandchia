@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cxvn4ryuwuefa"]
+[gd_scene load_steps=13 format=3 uid="uid://cxvn4ryuwuefa"]
 
 [ext_resource type="Script" path="res://Scripts/Canoe.gd" id="1_tsf7l"]
 [ext_resource type="PackedScene" uid="uid://cx0wskdfm3lgi" path="res://Scenes/UIlayer.tscn" id="2_1vd0h"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://ci656prhydnxh" path="res://Images/water map.png" id="5_knt0u"]
 [ext_resource type="Script" path="res://Scenes/Water.gd" id="6_gxs42"]
 [ext_resource type="Texture2D" uid="uid://bj5jpe4uxj5t1" path="res://Images/landmass test.png" id="6_m65py"]
+[ext_resource type="Texture2D" uid="uid://bmp5ryk5p4mvu" path="res://Images/POI test.png" id="7_nrbcd"]
+[ext_resource type="PackedScene" uid="uid://byw8df0mfsc66" path="res://Scenes/POI.tscn" id="8_6bkcg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0sfxp"]
 shader = ExtResource("4_x2bea")
@@ -31,14 +33,16 @@ shader_parameter/ripple_center7 = null
 shader_parameter/ripple_time7 = null
 shader_parameter/mask_texture = ExtResource("3_66kmq")
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_mspgq"]
+radius = 88.0875
+
 [node name="CanoeScene" type="Node2D"]
 
 [node name="UILayer" parent="." instance=ExtResource("2_1vd0h")]
-visible = false
 
 [node name="Water" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_0sfxp")
-position = Vector2(546, 328)
+position = Vector2(546, 318)
 scale = Vector2(4.05782, 4.04706)
 texture = ExtResource("5_knt0u")
 script = ExtResource("6_gxs42")
@@ -52,10 +56,18 @@ position = Vector2(574, 367)
 scale = Vector2(4.05782, 4.04706)
 texture = ExtResource("6_m65py")
 
+[node name="POIicons" type="Sprite2D" parent="Landmass Parent/Landmass"]
+texture = ExtResource("7_nrbcd")
+
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Landmass Parent"]
 polygon = PackedVector2Array(99, 100, 107, 125, 133, 147, 163, 175, 163, 175, 205, 194, 265, 204, 265, 204, 282, 230, 278, 300, 252, 323, 303, 355, 309, 393, 309, 393, 309, 432, 331, 461, 371, 487, 367, 521, 331, 521, 299, 513, 265, 519, 244, 511, 197, 536, 195, 485, 148, 457, 33, 510, 42, 596, 78, 640, 233, 657, 301, 595, 307, 568, 492, 578, 484, 629, 537, 617, 537, 589, 573, 578, 599, 578, 728, 613, 830, 708, -22, 708, -20, 53, 35, 83)
 
-[node name="Canoe" type="Node2D" parent="."]
+[node name="POI" parent="." instance=ExtResource("8_6bkcg")]
+position = Vector2(664, 120)
+approach_json_path = "res://Scripts/POI1_approach.json"
+enter_json_path = "res://Scripts/POI1.json"
+
+[node name="Canoe" type="Area2D" parent="."]
 position = Vector2(628, 446)
 scale = Vector2(0.33, 0.33)
 script = ExtResource("1_tsf7l")
@@ -70,3 +82,6 @@ texture = ExtResource("2_n43aj")
 [node name="Line2D" type="Line2D" parent="Canoe"]
 points = PackedVector2Array(67.1733, 65.0394)
 width = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Canoe"]
+shape = SubResource("CircleShape2D_mspgq")

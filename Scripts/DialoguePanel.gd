@@ -11,8 +11,7 @@ var current_index = 0
 var is_typing = false
 var full_text = ""
 var typewriter_speed = 0.02
-var can_auto_exit := false
-var displayed_lines := []
+var can_auto_exit = false
 
 
 # Called when the node enters the scene tree for the first time.
@@ -21,6 +20,7 @@ func _ready():
 	text_label.connect("meta_clicked", Callable(self, "_on_option_selected"))
 	text_label.scroll_active = false
 	text_label.scroll_following = true
+	input_blocker.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -33,14 +33,14 @@ func show_dialogue(dialogue, click_position: Vector2):
 		return
 	dialogue_data = dialogue
 	current_index = 0
-	displayed_lines = []
 	text_label.text = ""
 	_set_panel_side(click_position)
 	visible = true
 	exit_button.visible = false
 	options_container.visible = false
-	input_blocker.visible = true	# Block input
-	await get_tree().create_timer(0.3).timeout	# Wait for panel animation (match your tween duration)
+	input_blocker.visible = true
+	get_tree().call_group("ui", "block_canoe") # <--- Add this line
+	await get_tree().create_timer(0.3).timeout
 	await _show_section()
 
 func _set_panel_side(click_position):
@@ -55,15 +55,10 @@ func _set_panel_side(click_position):
 func _show_section():
 	var section = dialogue_data[current_index]
 	var new_line = section.get("text", "")
-	if displayed_lines.size() > current_index:
-		displayed_lines[current_index] = new_line
-	else:
-		displayed_lines.append(new_line)
-
 	# Build the base text (all previous lines)
 	var base_text = ""
-	for idx in range(displayed_lines.size() - 1):
-		base_text += displayed_lines[idx] + "\n\n"
+	for idx in range(current_index):
+		base_text += dialogue_data[idx].get("text", "") + "\n\n"
 
 	# Build the options string for this section (if any)
 	var options_text = ""
@@ -91,6 +86,7 @@ func _typewriter_effect(base_text, new_line, options_text, has_options):
 	if has_options:
 		text_label.text = base_text + new_line + "\n\n" + options_text
 		text_label.scroll_to_line(text_label.get_line_count() - 1)
+		input_blocker.visible = false  # <--- ADD THIS LINE
 	is_typing = false
 	if not has_options:
 		exit_button.visible = true
@@ -107,9 +103,25 @@ func _show_options(options):
 		options_container.add_child(btn)
 
 func _on_option_selected(next_index):
+	print("DEBUG: Option selected:", next_index)
 	next_index = int(next_index)
 	if next_index == -1:
 		_on_ExitButton_pressed()
+	elif next_index == -2:
+		# Animate exit of the current panel
+		visible = false
+		# Block input
+		input_blocker.visible = true
+		# Find the POI and call its start_enter_dialogue()
+		var poi = null
+		var pois = get_tree().get_nodes_in_group("poi")
+		for p in pois:
+			if p.canoe_in_range:
+				poi = p
+				break
+		if poi:
+			poi.start_enter_dialogue()
+		return
 	else:
 		current_index = next_index
 		await _show_section()
@@ -118,7 +130,12 @@ func _on_ExitButton_pressed():
 	print("DEBUG: Exit button pressed")
 	is_typing = false
 	visible = false
-	input_blocker.visible = false	# Unblock input
+	input_blocker.visible = false
+	get_tree().call_group("ui", "unblock_canoe") # <--- Add this line
+	# Hide overlay
+	var ui_layer = get_parent()
+	if ui_layer.has_node("DialogueOverlay"):
+		ui_layer.get_node("DialogueOverlay").visible = false
 
 func _input(event):
 	if event is InputEventMouseButton and event.pressed:
@@ -128,8 +145,8 @@ func _input(event):
 			var section = dialogue_data[current_index]
 			var new_line = section.get("text", "")
 			var base_text = ""
-			for idx in range(displayed_lines.size() - 1):
-				base_text += displayed_lines[idx] + "\n\n"
+			for idx in range(current_index):
+				base_text += dialogue_data[idx].get("text", "") + "\n\n"
 			var options_text = ""
 			if section.has("options"):
 				for option in section["options"]:

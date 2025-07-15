@@ -2,6 +2,7 @@
 extends CanvasLayer
 
 func _ready():
+	add_to_group("ui")
 	# Assign the InventoryGrid to GameManager
 	GameManager.inventory_grid = $InventoryPanel/InventoryGrid
 
@@ -112,3 +113,28 @@ func _on_inspect_icon_input_event(viewport, event, shape_idx):
 
 func _on_conversation_icon_input_event(viewport, event, shape_idx):
 	pass # Replace with function body.
+
+func show_dialogue_with_overlay(dialogue_data, click_position, immersive = false):
+	print("DEBUG: UILayer show_dialogue_with_overlay called")
+	var overlay = $DialogueOverlay
+	var anim_player = $AnimationPlayer
+	overlay.visible = true
+	overlay.modulate.a = 0.0
+	anim_player.play("fade_in_overlay")
+	await anim_player.animation_finished
+	print("DEBUG: Calling DialoguePanel.show_dialogue")
+	$DialoguePanel.show_dialogue(dialogue_data, click_position)
+
+func show_dialogue_panel(dialogue_data, click_position):
+	print("DEBUG: UILayer show_dialogue_panel called")
+	$DialoguePanel.show_dialogue(dialogue_data, click_position)
+
+func block_canoe():
+	var canoe = get_tree().get_root().find_child("Canoe", true, false)
+	if canoe:
+		canoe.is_blocked = true
+
+func unblock_canoe():
+	var canoe = get_tree().get_root().find_child("Canoe", true, false)
+	if canoe:
+		canoe.is_blocked = false

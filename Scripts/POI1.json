@@ -1,0 +1,15 @@
+[
+  {
+    "text": "Welcome to the island.",
+    "options": [
+      {"label": "Leave", "next": -1},
+      {"label": "Ask about the island", "next": 1}
+    ]
+  },
+  {
+    "text": "It's a beautiful place.",
+    "options": [
+      {"label": "Thanks!", "next": -1}
+    ]
+  }
+]
