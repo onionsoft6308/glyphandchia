@@ -28,7 +28,7 @@ radius = 47.0106
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 1152.0
-offset_bottom = 557.0
+offset_bottom = 643.0
 texture = ExtResource("1_0jhed")
 
 [node name="BeetRoot" type="Area2D" parent="."]
@@ -42,6 +42,7 @@ shape = SubResource("CircleShape2D_lorck")
 texture = ExtResource("2_3sc4n")
 
 [node name="NonCollectible" type="Area2D" parent="."]
+visible = false
 script = ExtResource("4_dox5c")
 object_name = "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
 
@@ -50,7 +51,6 @@ position = Vector2(223, 195)
 shape = SubResource("CircleShape2D_vj8jo")
 
 [node name="Sprite2D" type="Sprite2D" parent="NonCollectible"]
-visible = false
 position = Vector2(223, 195)
 texture = ExtResource("5_1y5n8")
 

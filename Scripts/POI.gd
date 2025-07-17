@@ -49,12 +49,8 @@ func _on_click_area_input_event(viewport, event, shape_idx):
 
 # Called by DialoguePanel when player chooses "enter"
 func start_enter_dialogue():
-	var enter_dialogue = []
 	if enter_json_path != "":
-		var file = FileAccess.open(enter_json_path, FileAccess.READ)
-		if file:
-			enter_dialogue = JSON.parse_string(file.get_as_text())
-	get_tree().call_group("ui", "show_dialogue_with_overlay", enter_dialogue, global_position, true)
+		get_tree().call_group("ui", "show_dungeon_experience", enter_json_path)
 
 func _start_glow():
 	anim.play("glow")

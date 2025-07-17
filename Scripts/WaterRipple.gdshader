@@ -36,9 +36,6 @@ void fragment() {
         else if (i == 2) { center = ripple_center2; time = ripple_time2; }
         else if (i == 3) { center = ripple_center3; time = ripple_time3; }
         else if (i == 4) { center = ripple_center4; time = ripple_time4; }
-        else if (i == 5) { center = ripple_center5; time = ripple_time5; }
-        else if (i == 6) { center = ripple_center6; time = ripple_time6; }
-        else if (i == 7) { center = ripple_center7; time = ripple_time7; }
 
         float fade = clamp(1.0 - (time / 0.5), 0.0, 1.0); // Fade out over 0.5 seconds
         // Only draw ripples on water (mask > 0.5) and if the center x is non-negative

@@ -1,0 +1,64 @@
+[
+  {
+    "text": "You step into the ancient temple. The air is thick with dust and the scent of old incense. Shadows flicker across the cracked stone floor as your footsteps echo in the silence. The entrance closes behind you, leaving only the faint glow of your lantern.",
+    "image": "res://Images/temple_interior.png",
+    "image_fade": {"in": 1.5, "out": 0.0}
+  },
+  {
+    "text": "A massive statue looms in the darkness, its eyes seeming to follow your every move. You feel a chill run down your spine as you approach. The inscription at its base is worn, but you can make out a few words: 'Guardian of the Forgotten.'",
+    "image": "res://Images/statue.png",
+    "image_fade": {"in": 1.0, "out": 1.0}
+  },
+  {
+    "text": "Suddenly, a rumbling sound shakes the temple. Dust falls from the ceiling and the statue's eyes glow faintly. You must act quickly!",
+    "options": [
+      {"label": "[color=orange]Hide behind the statue[/color]", "next": 4},
+      {"label": "[color=orange]Run back to the entrance[/color]", "next": 5},
+      {"label": "[color=orange]Read the inscription[/color]", "next": 6}
+    ],
+    "timer": 8.0
+  },
+  {
+    "text": "You dive behind the statue just as a section of the ceiling collapses. The noise is deafening, but you are safe for now. As the dust settles, you notice a hidden passage behind the statue.",
+    "image": "res://Images/hiding.png",
+    "image_fade": {"in": 1.0, "out": 1.0}
+  },
+  {
+    "text": "You sprint to the entrance, dodging falling debris. The door is sealed shut, but you find a lever nearby. Do you pull it?",
+    "options": [
+      {"label": "[color=orange]Pull the lever[/color]", "next": 7},
+      {"label": "[color=orange]Look for another exit[/color]", "next": 8}
+    ],
+    "timer": 6.0
+  },
+  {
+    "text": "You study the inscription, tracing the faded letters with your fingers. Suddenly, the statue's mouth opens, revealing a glowing key inside. You take the key and feel a surge of energy.",
+    "image": "res://Images/key.png",
+    "image_fade": {"in": 1.0, "out": 1.0}
+  },
+  {
+    "text": "You pull the lever and the entrance opens with a loud groan. Light floods the temple and you escape, clutching the key.",
+    "image": "res://Images/temple_exit.png",
+    "image_fade": {"in": 1.0, "out": 1.0}
+  },
+  {
+    "text": "You search for another exit and discover a trapdoor beneath a pile of rubble. It leads to a dark tunnel.",
+    "image": "res://Images/tunnel.png",
+    "image_fade": {"in": 1.0, "out": 1.0},
+    "options": [
+      {"label": "[color=orange]Enter the tunnel[/color]", "next": 9},
+      {"label": "[color=orange]Stay and wait for help[/color]", "next": 10}
+    ],
+    "timer": 7.0
+  },
+  {
+    "text": "You crawl through the tunnel, emerging into a hidden chamber filled with ancient treasures. Congratulations, you have discovered the temple's secret!",
+    "image": "res://Images/treasure.png",
+    "image_fade": {"in": 1.0, "out": 1.0}
+  },
+  {
+    "text": "You wait for help, but hours pass and the temple grows colder. Eventually, you muster the courage to try the tunnel.",
+    "image": "res://Images/tunnel.png",
+    "image_fade": {"in": 1.0, "out": 1.0}
+  }
+]

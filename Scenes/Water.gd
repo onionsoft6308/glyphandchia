@@ -2,15 +2,24 @@ extends Sprite2D
 
 @export var canoe_path: NodePath
 @export var ripple_lifetime: float = 0.5
-@export var ripple_interval: float = 0.25 # seconds between ripples
+@export var ripple_interval: float = 0.3 # seconds between ripples
 
 var ripples := []
 var last_ripple_time := 0.0
+var was_moving := false
 
 func _process(_delta):
 	var canoe = get_node_or_null(canoe_path)
 	var t = Time.get_ticks_msec() / 1000.0
+	var moving_now = false
 	if canoe:
+		moving_now = canoe.velocity.length() > 1.0
+		# Clear ripples when movement starts
+		if moving_now and not was_moving:
+			ripples.clear()
+			last_ripple_time = t
+		was_moving = moving_now
+
 		var tex_size = texture.get_size()
 		var half_size = (tex_size * scale) * 0.5
 		var top_left = global_position - half_size
@@ -20,7 +29,7 @@ func _process(_delta):
 			offset.y / (tex_size.y * scale.y)
 		)
 		# Spawn a ripple only at intervals while moving
-		if canoe.velocity.length() > 1.0:
+		if moving_now:
 			if t - last_ripple_time > ripple_interval:
 				ripples.append({ "center": uv, "start_time": t })
 				last_ripple_time = t

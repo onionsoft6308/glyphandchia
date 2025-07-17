@@ -29,7 +29,7 @@ general/balloon_path="res://Dialogic/balloon.tscn"
 
 [display]
 
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
@@ -39,3 +39,5 @@ enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true

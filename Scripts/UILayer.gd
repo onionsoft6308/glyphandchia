@@ -119,7 +119,6 @@ func show_dialogue_with_overlay(dialogue_data, click_position, immersive = false
 	var overlay = $DialogueOverlay
 	var anim_player = $AnimationPlayer
 	overlay.visible = true
-	overlay.modulate.a = 0.0
 	anim_player.play("fade_in_overlay")
 	await anim_player.animation_finished
 	print("DEBUG: Calling DialoguePanel.show_dialogue")
@@ -138,3 +137,9 @@ func unblock_canoe():
 	var canoe = get_tree().get_root().find_child("Canoe", true, false)
 	if canoe:
 		canoe.is_blocked = false
+
+func show_dungeon_experience(dungeon_json_path):
+	var file = FileAccess.open(dungeon_json_path, FileAccess.READ)
+	if file:
+		var dungeon_data = JSON.parse_string(file.get_as_text())
+		$DungeonOverlay.start_dungeon(dungeon_data)

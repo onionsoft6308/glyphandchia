@@ -2,12 +2,12 @@
     { "text": "You wave at Chia" },
     { "text": "Massive.",
       "options": [
-        { "label": "Bully him", "next": 2 }
+        { "label": "[Bully him]", "next": 2 }
       ]
     },
     { "text": "Goodbye fatty." ,
       "options": [
-        { "label": "Leave", "next": -1 }
+        { "label": "[Leave]", "next": -1 }
       ]
     }
 ]

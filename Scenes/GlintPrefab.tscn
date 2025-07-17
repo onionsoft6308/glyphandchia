@@ -1,19 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://bphdjb6rtr8e7"]
+[gd_scene load_steps=8 format=3 uid="uid://ootchsp0l1hm"]
 
-[ext_resource type="Script" path="res://Scripts/AdvancedItem.gd" id="1_7wbc1"]
-[ext_resource type="Texture2D" uid="uid://dmq6tong23dns" path="res://Images/UI/Glint.png" id="2_4kad2"]
-[ext_resource type="Script" path="res://Scripts/CollectIcon.gd" id="3_8doae"]
-[ext_resource type="Texture2D" uid="uid://bpkehg2p7uppt" path="res://Images/UI/EYE.png" id="4_ne8vo"]
-[ext_resource type="Script" path="res://Scripts/InspectIcon.gd" id="5_oea2j"]
-[ext_resource type="Texture2D" uid="uid://b4q25oo1knrd4" path="res://Images/UI/hand.png" id="7_uwe18"]
+[ext_resource type="Texture2D" uid="uid://dmq6tong23dns" path="res://Images/UI/Glint.png" id="1_trndn"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_d4l56"]
-radius = 140.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_l4pbu"]
-radius = 130.096
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_0reaq"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_4wgee"]
 radius = 25.02
 
 [sub_resource type="Animation" id="Animation_tsmh6"]
@@ -139,57 +128,18 @@ _data = {
 "RESET": SubResource("Animation_ah0ph")
 }
 
-[node name="AdvancedItem" type="Area2D"]
-script = ExtResource("1_7wbc1")
-item_description = "."
-can_collect = true
-
-[node name="ItemSprite" type="Sprite2D" parent="."]
+[node name="GlintPrefab" type="Area2D"]
 
 [node name="GlintSprite" type="Sprite2D" parent="."]
 z_index = 1
 position = Vector2(-0.485, 2.33)
 scale = Vector2(0.098, 0.098)
-texture = ExtResource("2_4kad2")
-
-[node name="InspectIcon" type="Area2D" parent="."]
-position = Vector2(2, -41)
-scale = Vector2(0.2, 0.2)
-script = ExtResource("5_oea2j")
-
-[node name="Sprite2D" type="Sprite2D" parent="InspectIcon"]
-position = Vector2(-16.25, 0)
-scale = Vector2(0.88, 0.88)
-texture = ExtResource("4_ne8vo")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InspectIcon"]
-position = Vector2(-10, -25)
-shape = SubResource("CircleShape2D_d4l56")
-
-[node name="CollectIcon" type="Area2D" parent="."]
-position = Vector2(38.295, 0)
-scale = Vector2(0.2, 0.2)
-script = ExtResource("3_8doae")
-
-[node name="Sprite2D" type="Sprite2D" parent="CollectIcon"]
-position = Vector2(38.43, -4.495)
-scale = Vector2(0.595, 0.595)
-texture = ExtResource("7_uwe18")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectIcon"]
-position = Vector2(33.525, 4.76837e-07)
-shape = SubResource("CircleShape2D_l4pbu")
+texture = ExtResource("1_trndn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_0reaq")
+shape = SubResource("CircleShape2D_4wgee")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_rs2rl")
 }
-autoplay = "InspectHover"
-
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
-[connection signal="input_event" from="InspectIcon" to="." method="_on_inspect_icon_input_event"]
-[connection signal="input_event" from="CollectIcon" to="." method="_on_collect_icon_input_event"]

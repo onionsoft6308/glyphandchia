@@ -2,14 +2,15 @@
     { "text": "This is a inspectible item." },
     { "text": "Would you like to know more?",
       "options": [
-        { "label": "Tell me more", "next": 2 },
-        { "label": "Leave", "next": -1 }
+        { "label": "[color=orange][Tell me more][/color]", "next": 2 },
+        { "label": "[color=orange][Leave][/color]", "next": -1 }
       ]
     },
     { "text": "There ar 1 2 3 4 5 6 8 79 04849583-458345 093480934t things to know about 0933480934 blah blah blah" },
+    { "text": "There ar 1 2 3 4 5 6 8 79 04849583-458345 093480934t things to know about 0933480934 blah blah blah" },
     { "text": "Here is some more information.Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
       "options": [
-        { "label": "Leave", "next": -1 }
+        { "label": "[color=orange][Leave][/color]", "next": -1 }
       ]
     }
 ]

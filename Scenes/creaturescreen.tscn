@@ -6,9 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://cx0wskdfm3lgi" path="res://Scenes/UIlayer.tscn" id="3_ml6jw"]
 [ext_resource type="Texture2D" uid="uid://hkriloymtqg" path="res://Images/Chia/thought bubble test sprite.png" id="3_y5yrs"]
 [ext_resource type="Script" path="res://Scripts/ChiaInteractable.gd" id="6_bgah4"]
-[ext_resource type="Texture2D" uid="uid://djnivexvj3aci" path="res://Images/inspecticon.png" id="7_xdh87"]
-[ext_resource type="Texture2D" uid="uid://b7vl6pmbub6aj" path="res://Images/glint.png" id="8_vhdqa"]
-[ext_resource type="Texture2D" uid="uid://krck5fipsfys" path="res://Images/speechicon.png" id="9_hi3o7"]
+[ext_resource type="Texture2D" uid="uid://bpkehg2p7uppt" path="res://Images/UI/EYE.png" id="7_o7850"]
+[ext_resource type="PackedScene" uid="uid://ootchsp0l1hm" path="res://Scenes/GlintPrefab.tscn" id="9_64di0"]
+[ext_resource type="Texture2D" uid="uid://b7wsi6kqdkico" path="res://Images/UI/speech bubble.png" id="9_q1roo"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v1swh"]
 radius = 23.933
@@ -59,12 +59,13 @@ texture = ExtResource("3_y5yrs")
 anchors_preset = -1
 anchor_left = 0.137
 anchor_top = 0.176
-anchor_right = 0.882137
-anchor_bottom = 0.539
+anchor_right = 1.50959
+anchor_bottom = 0.440961
 offset_left = -50.974
 offset_top = -50.952
 offset_right = -50.978
 offset_bottom = -50.978
+columns = 3
 metadata/_edit_use_anchors_ = true
 
 [node name="ChiaInteractable" type="Area2D" parent="Chia"]
@@ -73,34 +74,32 @@ inspect_json_path = "res://Scripts/ChiaInspect1.json"
 conversation_json_path = "res://Scripts/ChiaConversation1.json"
 
 [node name="InspectIcon" type="Area2D" parent="Chia/ChiaInteractable"]
-visible = false
+position = Vector2(-9, 10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Chia/ChiaInteractable/InspectIcon"]
 position = Vector2(586, 185)
+scale = Vector2(1, 1)
 shape = SubResource("CircleShape2D_n6frj")
 
 [node name="InspectIconSprite" type="Sprite2D" parent="Chia/ChiaInteractable/InspectIcon"]
-position = Vector2(586, 181)
-scale = Vector2(0.357143, 0.357143)
-texture = ExtResource("7_xdh87")
+position = Vector2(584, 190)
+scale = Vector2(0.213871, 0.213871)
+texture = ExtResource("7_o7850")
 
-[node name="GlintSprite" type="Sprite2D" parent="Chia/ChiaInteractable"]
-visible = false
-position = Vector2(578, 330)
-scale = Vector2(0.214286, 0.214286)
-texture = ExtResource("8_vhdqa")
+[node name="GlintSprite" parent="Chia/ChiaInteractable" instance=ExtResource("9_64di0")]
+position = Vector2(578, 334)
 
 [node name="ConversationIcon" type="Area2D" parent="Chia/ChiaInteractable"]
-visible = false
+position = Vector2(-31, 8)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Chia/ChiaInteractable/ConversationIcon"]
 position = Vector2(705, 272)
 shape = SubResource("CircleShape2D_vdtnu")
 
 [node name="ConversationIconSprite" type="Sprite2D" parent="Chia/ChiaInteractable/ConversationIcon"]
-position = Vector2(707, 272)
-scale = Vector2(1.55952, 1.55952)
-texture = ExtResource("9_hi3o7")
+position = Vector2(705, 273)
+scale = Vector2(0.271682, 0.271682)
+texture = ExtResource("9_q1roo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Chia/ChiaInteractable"]
 position = Vector2(580.5, 333.5)

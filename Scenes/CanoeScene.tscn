@@ -13,7 +13,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0sfxp"]
 shader = ExtResource("4_x2bea")
-shader_parameter/ripple_strength = 0.25
+shader_parameter/ripple_strength = 0.5
 shader_parameter/ripple_speed = 0.1
 shader_parameter/ripple_center0 = null
 shader_parameter/ripple_time0 = null
@@ -65,7 +65,7 @@ polygon = PackedVector2Array(99, 100, 107, 125, 133, 147, 163, 175, 163, 175, 20
 [node name="POI" parent="." instance=ExtResource("8_6bkcg")]
 position = Vector2(664, 120)
 approach_json_path = "res://Scripts/POI1_approach.json"
-enter_json_path = "res://Scripts/POI1.json"
+enter_json_path = "res://Scripts/Dungeon1.json"
 
 [node name="Canoe" type="Area2D" parent="."]
 position = Vector2(628, 446)

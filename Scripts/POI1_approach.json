@@ -2,8 +2,8 @@
   {
     "text": "Your canoe drifts by a derelict building. It looms above you. Clouds drift by.",
     "options": [
-      {"label": "Leave", "next": -1},
-      {"label": "Enter", "next": -2}
+      {"label": "[Leave]", "next": -1},
+      {"label": "[Enter]", "next": -2}
     ]
   }
 ]
