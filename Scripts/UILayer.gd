@@ -20,40 +20,48 @@ func _ready():
 	call_deferred("_check_current_scene")
 
 func _check_current_scene():
-	print("DEBUG: _check_current_scene() called")
 	var current_scene = get_tree().current_scene
 	if current_scene:
 		print("Current scene name (via current_scene):", current_scene.name)
 		if current_scene.name == "huntingscreen":
 			# Show the arrow to the creature screen
-			$ArrowButtonToChia.visible = true
-			$ArrowButtonToHunting.visible = false
+			$ArrowButtonToChiafromHunting.visible = true
+			$ArrowButtonToHuntingfromChia.visible = false
 			$ArrowButtonToGlyph.visible = false
 			$ArrowButtonToChiaFromGlyph.visible = false
-			print("ArrowButtonToChia is now visible.")
+			$ArrowButtonToDockfromHunting.visible = true
+			$ArrowButtonToHuntingfromDock.visible = false
+			print("ArrowButtonToChia and ArrowButtonToDock are now visible.")
 		elif current_scene.name == "creaturescreen":
 			# Show the arrows for hunting and glyph screens
-			$ArrowButtonToHunting.visible = true
+			$ArrowButtonToHuntingfromChia.visible = true
 			$ArrowButtonToGlyph.visible = true
-			$ArrowButtonToChia.visible = false
+			$ArrowButtonToChiafromHunting.visible = false
 			
 			$ArrowButtonToChiaFromGlyph.visible = false
 			print("ArrowButtonToHunting and ArrowButtonToGlyph are now visible.")
 		elif current_scene.name == "glyphscreen":
 			# Show the arrow to the creature screen
 			
-			$ArrowButtonToHunting.visible = false
+			$ArrowButtonToHuntingfromChia.visible = false
 			$ArrowButtonToGlyph.visible = false
-			$ArrowButtonToChia.visible = false
+			$ArrowButtonToChiafromHunting.visible = false
 			$ArrowButtonToChiaFromGlyph.visible = true
 			print("ArrowButtonToChiaFromGlyph is now visible.")
+		elif current_scene.name == "dock":
+			# Show the arrow to the hunting screen from dock
+			$ArrowButtonToDockfromHunting.visible = false
+			$ArrowButtonToHuntingFromDock.visible = true
+			print("ArrowButtonToHuntingFromDock is now visible.")
 		else:
 			# Hide all arrows
-			$ArrowButtonToChia.visible = false
-			$ArrowButtonToHunting.visible = false
+			$ArrowButtonToChiafromHunting.visible = false
+			$ArrowButtonToHuntingfromChia.visible = false
 			$ArrowButtonToGlyph.visible = false
 			
 			$ArrowButtonToChiaFromGlyph.visible = false
+			$ArrowButtonToDockfromHunting.visible = false
+			$ArrowButtonToHuntingfromDock.visible = false
 			print("All arrows are now hidden.")
 	else:
 		print("ERROR: current_scene is null")
@@ -75,6 +83,14 @@ func _on_arrow_button_to_chia_pressed():
 func _on_arrow_button_to_chia_from_glyph_pressed():
 	# Navigate to the creature screen
 	get_tree().change_scene_to_file("res://Scenes/creaturescreen.tscn")
+
+func _on_arrow_button_to_dock_pressed():
+	# Navigate to the dock screen
+	get_tree().change_scene_to_file("res://Scenes/dock.tscn")
+
+func _on_arrow_button_to_hunting_from_dock_pressed():
+	# Navigate from dock to hunting screen
+	get_tree().change_scene_to_file("res://Scenes/huntingscreen.tscn")
 
 
 func _on_item_mouse_exited():
@@ -141,5 +157,23 @@ func unblock_canoe():
 func show_dungeon_experience(dungeon_json_path):
 	var file = FileAccess.open(dungeon_json_path, FileAccess.READ)
 	if file:
-		var dungeon_data = JSON.parse_string(file.get_as_text())
-		$DungeonOverlay.start_dungeon(dungeon_data)
+		var result = JSON.parse_string(file.get_as_text())
+		if typeof(result) == TYPE_ARRAY and result.size() > 0:
+			$DungeonOverlay.start_dungeon(result)
+		else:
+			push_error("Dungeon JSON is not a valid array or is empty!")
+	else:
+		push_error("Dungeon JSON file not found!")
+
+func disable_all_arrows():
+	$ArrowButtonToDock.visible = false
+	$ArrowButtonToDock.disabled = true
+	$ArrowButtonToHuntingFromDock.visible = false
+	$ArrowButtonToHuntingFromDock.disabled = true
+	# Disable other arrow buttons as needed
+
+func enable_arrows_for_scene():
+	_check_current_scene()
+	$ArrowButtonToDock.disabled = false
+	$ArrowButtonToHuntingFromDock.disabled = false
+	# Enable other arrow buttons as needed

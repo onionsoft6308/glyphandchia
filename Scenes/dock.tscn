@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2qi1qv3puikv"]
+
+[ext_resource type="PackedScene" uid="uid://cx0wskdfm3lgi" path="res://Scenes/UIlayer.tscn" id="1_yviwp"]
+[ext_resource type="Texture2D" uid="uid://cj8qn1p3f00rq" path="res://Images/EMBARK.png" id="2_lu71n"]
+[ext_resource type="PackedScene" uid="uid://bphdjb6rtr8e7" path="res://Scenes/AdvancedItem.tscn" id="3_1f0o8"]
+[ext_resource type="PackedScene" uid="uid://ootchsp0l1hm" path="res://Scenes/GlintPrefab.tscn" id="4_gmd1h"]
+
+[node name="Dock" type="Node2D"]
+
+[node name="UILayer" parent="." instance=ExtResource("1_yviwp")]
+
+[node name="Embark" type="Sprite2D" parent="."]
+position = Vector2(573.5, 300.5)
+scale = Vector2(3.93537, 3.45294)
+texture = ExtResource("2_lu71n")
+
+[node name="CanoeInspect" parent="." instance=ExtResource("3_1f0o8")]
+position = Vector2(913, 533)
+scale = Vector2(1.87, 1.87)
+item_name = "Old Boat"
+item_description = "Old Boat."
+can_collect = false
+dialogue_json_path = "res://Scripts/EmbarkfromDock.json"
+
+[node name="MothershipInspect" parent="." instance=ExtResource("3_1f0o8")]
+position = Vector2(770, 150)
+item_name = "Mothership"
+item_description = "Mothership"
+can_collect = false
+dialogue_json_path = "res://Scripts/MothershipInspect.json"
+
+[node name="FloodedCityInspect" parent="." instance=ExtResource("3_1f0o8")]
+position = Vector2(575, 361)
+item_name = "Flooded ruins"
+item_description = "Flooded Ruins"
+can_collect = false
+dialogue_json_path = "res://Scripts/FloodedCityInspect.json"
+
+[node name="GlintPrefab" parent="." instance=ExtResource("4_gmd1h")]
+position = Vector2(575, 361)
+
+[node name="GlintPrefab2" parent="." instance=ExtResource("4_gmd1h")]
+position = Vector2(770, 150)
+
+[node name="GlintPrefab3" parent="." instance=ExtResource("4_gmd1h")]
+position = Vector2(913, 534)
+scale = Vector2(2.02, 2.02)

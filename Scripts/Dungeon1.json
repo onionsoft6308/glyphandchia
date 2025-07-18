@@ -1,5 +1,10 @@
 [
   {
+    "text": "THE FOLLOWING SEQUENCE IS A PLACEHOLDER TEXT ENCOUNTER. Some things may work or not work.",
+    "image": "res://Images/temple_interior.png",
+    "image_fade": {"in": 1.5, "out": 0.0}
+  },
+  {
     "text": "You step into the ancient temple. The air is thick with dust and the scent of old incense. Shadows flicker across the cracked stone floor as your footsteps echo in the silence. The entrance closes behind you, leaving only the faint glow of your lantern.",
     "image": "res://Images/temple_interior.png",
     "image_fade": {"in": 1.5, "out": 0.0}
@@ -12,11 +17,11 @@
   {
     "text": "Suddenly, a rumbling sound shakes the temple. Dust falls from the ceiling and the statue's eyes glow faintly. You must act quickly!",
     "options": [
-      {"label": "[color=orange]Hide behind the statue[/color]", "next": 4},
-      {"label": "[color=orange]Run back to the entrance[/color]", "next": 5},
-      {"label": "[color=orange]Read the inscription[/color]", "next": 6}
+      {"label": "[color=orange]Hide behind the statue[/color]", "next": 5},
+      {"label": "[color=orange]Run back to the entrance[/color]", "next": 6},
+      {"label": "[color=orange]Read the inscription[/color]", "next": 7}
     ],
-    "timer": 8.0
+    "timer": 4.0
   },
   {
     "text": "You dive behind the statue just as a section of the ceiling collapses. The noise is deafening, but you are safe for now. As the dust settles, you notice a hidden passage behind the statue.",
@@ -26,8 +31,8 @@
   {
     "text": "You sprint to the entrance, dodging falling debris. The door is sealed shut, but you find a lever nearby. Do you pull it?",
     "options": [
-      {"label": "[color=orange]Pull the lever[/color]", "next": 7},
-      {"label": "[color=orange]Look for another exit[/color]", "next": 8}
+      {"label": "[color=orange]Pull the lever[/color]", "next": 8},
+      {"label": "[color=orange]Look for another exit[/color]", "next": 9}
     ],
     "timer": 6.0
   },
@@ -46,10 +51,9 @@
     "image": "res://Images/tunnel.png",
     "image_fade": {"in": 1.0, "out": 1.0},
     "options": [
-      {"label": "[color=orange]Enter the tunnel[/color]", "next": 9},
-      {"label": "[color=orange]Stay and wait for help[/color]", "next": 10}
+      {"label": "[color=orange]Enter the tunnel[/color]", "next": 10},
+      {"label": "[color=orange]Stay and wait for help[/color]", "next": 11}
     ],
-    "timer": 7.0
   },
   {
     "text": "You crawl through the tunnel, emerging into a hidden chamber filled with ancient treasures. Congratulations, you have discovered the temple's secret!",

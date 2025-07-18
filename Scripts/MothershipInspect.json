@@ -1,0 +1,9 @@
+[
+    {"text": "The mothership hangs low in the sky, casting a shadow over the flooded city."},
+    {"text": "It's inhabitants vanished as suddenly as its arrival."},
+    {"text": "Green neon lights flicker across its metallic surface.",
+    "options": [
+      {"label": "[color=orange][Leave][/color]", "next": -1}
+    ]
+  }
+]

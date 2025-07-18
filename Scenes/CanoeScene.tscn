@@ -68,7 +68,7 @@ approach_json_path = "res://Scripts/POI1_approach.json"
 enter_json_path = "res://Scripts/Dungeon1.json"
 
 [node name="Canoe" type="Area2D" parent="."]
-position = Vector2(628, 446)
+position = Vector2(647, 184)
 scale = Vector2(0.33, 0.33)
 script = ExtResource("1_tsf7l")
 acceleration = 70.0

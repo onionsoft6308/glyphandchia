@@ -1,0 +1,10 @@
+[
+  {"text": "The old city lies in ruins submerged."},
+  {"text": "In it's place, an abundance of natural life has sprung."},  
+  {"text": "Strange plants and creatures fused with alien lifeforms have made the rooftops their home."},
+  {"text": "Below, ancient discoveries wait to be unearthed.",
+    "options": [
+      {"label": "[color=orange][Leave][/color]", "next": -1}
+    ]
+  }
+]

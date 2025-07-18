@@ -109,6 +109,16 @@ func _on_option_selected(next_index):
 		return  # Ignore clicks if blocked
 	print("DEBUG: Option selected:", next_index)
 	next_index = int(next_index)
+	var section = dialogue_data[current_index]
+	if section.has("options"):
+		var selected_option = null
+		for option in section["options"]:
+			if int(option["next"]) == next_index:
+				selected_option = option
+				break
+		if selected_option and selected_option.has("scene"):
+			get_tree().change_scene_to_file(selected_option["scene"])
+			return
 	if next_index == -1:
 		is_typing = false
 		input_blocker.visible = false

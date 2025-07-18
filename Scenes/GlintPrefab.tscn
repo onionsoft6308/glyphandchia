@@ -5,6 +5,23 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_4wgee"]
 radius = 25.02
 
+[sub_resource type="Animation" id="Animation_yn28b"]
+resource_name = "CollectHover"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollectIcon/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(38.43, -4.495), Vector2(38.43, 0), Vector2(38.43, -4.495)]
+}
+
 [sub_resource type="Animation" id="Animation_tsmh6"]
 resource_name = "Glinthover"
 length = 3.0
@@ -20,46 +37,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(-0.485, 2), Vector2(-0.485, 2.65), Vector2(-0.485, 2)]
-}
-
-[sub_resource type="Animation" id="Animation_ah0ph"]
-length = 0.001
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("GlintSprite:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-0.485, 2.33)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("InspectIcon/Sprite2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-16.25, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("CollectIcon/Sprite2D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(38.43, -4.495)]
 }
 
 [sub_resource type="Animation" id="Animation_iae3p"]
@@ -103,21 +80,44 @@ tracks/2/keys = {
 "values": [Vector2(-0.485, 2.33), Vector2(-0.485, 0), Vector2(-0.485, 2.33)]
 }
 
-[sub_resource type="Animation" id="Animation_yn28b"]
-resource_name = "CollectHover"
-length = 3.0
+[sub_resource type="Animation" id="Animation_ah0ph"]
+length = 0.001
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CollectIcon/Sprite2D:position")
+tracks/0/path = NodePath("GlintSprite:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.5, 3),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(38.43, -4.495), Vector2(38.43, 0), Vector2(38.43, -4.495)]
+"values": [Vector2(-0.485, 2.33)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("InspectIcon/Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-16.25, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollectIcon/Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(38.43, -4.495)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rs2rl"]
@@ -143,3 +143,4 @@ shape = SubResource("CircleShape2D_4wgee")
 libraries = {
 "": SubResource("AnimationLibrary_rs2rl")
 }
+autoplay = "Glinthover"

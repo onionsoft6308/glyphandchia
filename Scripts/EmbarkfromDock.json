@@ -1,0 +1,12 @@
+[
+    { "text": "An old rowboat is tied to a makeshift dock." },
+    { "text": "From the distance, the mysteries of the flooded city beckon you." },
+    { "text": "Further beyond, the derelict mothership hangs low in the sky." },
+    { "text": "What will you do?",
+      "options": [
+        { "label": "[color=orange][Embark][/color]", "next": 2, "scene": "res://Scenes/CanoeScene.tscn" },
+        { "label": "[color=orange][Stay][/color]", "next": -1 }
+      ]
+    }
+   
+]

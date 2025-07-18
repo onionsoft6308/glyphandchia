@@ -78,7 +78,6 @@ position = Vector2(-9, 10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Chia/ChiaInteractable/InspectIcon"]
 position = Vector2(586, 185)
-scale = Vector2(1, 1)
 shape = SubResource("CircleShape2D_n6frj")
 
 [node name="InspectIconSprite" type="Sprite2D" parent="Chia/ChiaInteractable/InspectIcon"]
